@@ -1,0 +1,104 @@
+import 'package:abitur/models/event_model.dart';
+import 'package:abitur/models/news_model.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
+
+class EventSectionCard extends StatelessWidget {
+  final EventViewModel _eventViewModel;
+
+  const EventSectionCard({Key? key, required EventViewModel eventViewModel})
+      : _eventViewModel = eventViewModel,
+        super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final DateTime now = DateTime.now();
+    final eventTime;
+    if (_eventViewModel.dateFrom != null) {
+      eventTime =
+          "Через ${_eventViewModel.dateFrom!.difference(now).inDays ~/ 30} месяцев";
+    } else
+      eventTime = 'Точная дата пока неизвестна';
+
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.14),
+            blurRadius: 5,
+            offset: Offset(0, 2),
+          ),
+        ],
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Material(
+        type: MaterialType.transparency,
+        child: InkWell(
+          onTap: () {},
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      eventTime,
+                      style: TextStyle(
+                        fontSize: 14,
+                        height: 18 / 14,
+                        color: Colors.red.shade900,
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(children: [
+                        Text(
+                          _eventViewModel.title,
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                              height: 22 / 16),
+                        ),
+                      ]),
+                    )
+                  ],
+                ),
+                SizedBox(height: 16),
+                if (_eventViewModel.dateFrom != null)
+                  Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(right: 10),
+                        child: SvgPicture.asset(
+                            'assets/icons/icon_calendar.svg',
+                            height: 10,
+                            width: 10),
+                      ),
+                      Text(
+                        DateFormat.yMd('ru_RU')
+                                .format(_eventViewModel.dateFrom!) +
+                            ' - ' +
+                            DateFormat.yMd('ru_RU')
+                                .format(_eventViewModel.dateTo!),
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.normal,
+                            height: 18 / 14,
+                            color: Color(0XFF909090)),
+                      )
+                    ],
+                  )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
