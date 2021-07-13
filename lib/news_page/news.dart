@@ -66,38 +66,25 @@ class _HomePageState extends State<News> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Новости"),
-        centerTitle: true,
-      ),
-      body: loadingNews
-          ? haveConnection
-              ? ListView.separated(
-                  controller: _scrollController,
-                  padding: const EdgeInsets.all(16),
-                  itemBuilder: (BuildContext context, int index) {
-                    /// выводим индикатор загрузки, если индекс выходит за длину массива
-                    if (index >= news.length)
-                      return const CircularProgressIndicator();
+        appBar: AppBar(
+          title: Text("Новости"),
+          centerTitle: true,
+        ),
+        body: ListView.separated(
+            controller: _scrollController,
+            padding: const EdgeInsets.all(16),
+            itemBuilder: (BuildContext context, int index) {
+              /// выводим индикатор загрузки, если индекс выходит за длину массива
+              if (index >= news.length)
+                return const CircularProgressIndicator();
 
-                    final element = NewsSectionCard(
-                      newsViewModel: news.elementAt(index),
-                    );
-                    return element;
-                  },
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(height: 16),
-                  itemCount: news.length)
-              : Center(
-                  child: Text(
-                    'Ошибка при загрузке новостей',
-                    style: TextStyle(fontSize: 16, color: Colors.black),
-                  ),
-                )
-          : Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [CircularProgressIndicator()]),
-    );
+              final element = NewsSectionCard(
+                newsViewModel: news.elementAt(index),
+              );
+              return element;
+            },
+            separatorBuilder: (context, index) => const SizedBox(height: 16),
+            itemCount: news.length));
   }
 }
 
