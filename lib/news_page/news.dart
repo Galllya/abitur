@@ -12,19 +12,23 @@ class News extends StatefulWidget {
 class _HomePageState extends State<News> {
   final _scrollController = ScrollController();
   final dio = Dio();
+  PaginationNewsModel<NewsViewModel>? newsPagination;
   List<NewsViewModel> news = [];
   bool haveConnection = true;
   bool loadingNews = false;
   bool loadingEvent = false;
+  int currentPage = 1;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    loadnews();
+
+    loadnews(currentPage);
     _scrollController.addListener(_onScroll);
   }
 
-  loadnews() async {
+  Future<void> loadnews(int page) async {
     final String URL =
         'http://abiturient.paraweb.media/api/v1/News?page=1&size=100';
     try {
@@ -32,8 +36,20 @@ class _HomePageState extends State<News> {
 
       final pagination = PaginationModel.fromJson(response.data,
           (json) => NewsViewModel.fromJson(json as Map<String, dynamic>));
+
+      await Future.delayed(const Duration(seconds: 1));
+
+      currentPage = currentPage + 1;
       setState(() {
-        news = pagination.elements;
+        news = pagination as List<NewsViewModel>;
+        newsPagination = PaginationNewsModel<NewsViewModel>(
+          elements: [
+            /// Так как при первой загрузке у нас еще нет значения в этом поле, проверяем его на null и добавляем, если есть
+            if (newsPagination != null) ...newsPagination!.elements,
+            ...news,
+          ],
+          totalCount: news.length,
+        );
         loadingNews = true;
       });
     } catch (e) {
@@ -45,7 +61,7 @@ class _HomePageState extends State<News> {
 
   void _onScroll() {
     if (_isBottom) {
-      /// вызываем загрузку следующей страницы;
+      loadnews(currentPage + 1);
     }
   }
 
