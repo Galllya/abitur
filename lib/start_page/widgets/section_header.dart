@@ -1,5 +1,4 @@
 import 'package:abitur/event_page/event.dart';
-import 'package:abitur/models/list_screen.dart';
 import 'package:abitur/news_page/news.dart';
 import 'package:flutter/material.dart';
 

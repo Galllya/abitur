@@ -30,6 +30,14 @@ class _HomePageState extends State<News> {
   }
 
   void loadNews(int page) async {
+    if (newsPagination != null) {
+      if (newsPagination!.elements.length == newsPagination!.totalCount) {
+        return;
+      }
+    }
+    setState(() {
+      loadingNews = true;
+    });
     final String url =
         'http://abiturient.paraweb.media/api/v1/News?page=$page&size=10';
     try {
@@ -40,22 +48,29 @@ class _HomePageState extends State<News> {
       setState(() {
         print("currentPage: $currentPage          page: $page");
         currentPage = page;
-        newsPagination = PaginationModel<NewsViewModel>([
-          if (newsPagination != null) ...newsPagination!.elements,
-          ...pagination.elements,
-        ], pagination.totalCount);
-        loadingNews = true;
+        newsPagination = PaginationModel<NewsViewModel>(
+          [
+            if (newsPagination != null) ...newsPagination!.elements,
+            ...pagination.elements,
+          ],
+          pagination.totalCount,
+        );
+        loadingNews = false;
       });
     } catch (e) {
-      loadingNews = true;
+      setState(() {
+        loadingNews = false;
+        haveConnection = false;
+      });
       throw Exception('Ошибка загрузки новостей');
     }
   }
 
   void _onScroll() {
-    if (newsPagination != null &&
-        newsPagination!.totalCount != newsPagination!.elements.length &&
-        loadingNews) if (_isBottom) {
+    // if (newsPagination != null &&
+    //     newsPagination!.totalCount != newsPagination!.elements.length &&
+    //     loadingNews)
+    if (_isBottom && !loadingNews) {
       loadNews(currentPage + 1);
     }
   }
@@ -77,32 +92,42 @@ class _HomePageState extends State<News> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Новости"),
-        centerTitle: true,
-      ),
-      body: newsPagination != null
-          ? ListView.separated(
-              controller: _scrollController,
-              padding: const EdgeInsets.all(16),
-              itemBuilder: (BuildContext context, int index) {
-                /// выводим индикатор загрузки, если индекс выходит за длину массива
-                if (index >= newsPagination!.elements.length)
-                  return const CircularProgressIndicator();
+        appBar: AppBar(
+          title: Text("Новости"),
+          centerTitle: true,
+        ),
+        body: haveConnection
+            ? newsPagination != null
+                ? ListView.separated(
+                    controller: _scrollController,
+                    padding: const EdgeInsets.all(16),
+                    itemBuilder: (BuildContext context, int index) {
+                      /// выводим индикатор загрузки, если индекс выходит за длину массива
+                      if (index >= newsPagination!.elements.length)
+                        return const CircularProgressIndicator();
 
-                final element = NewsSectionCard(
-                  newsViewModel: newsPagination!.elements.elementAt(index),
-                );
-                return element;
-              },
-              separatorBuilder: (context, index) => const SizedBox(height: 16),
-              itemCount:
-                  newsPagination!.totalCount > newsPagination!.elements.length
-                      ? newsPagination!.elements.length + 1
-                      : newsPagination!.elements.length,
-            )
-          : CircularProgressIndicator(),
-    );
+                      final element = NewsSectionCard(
+                        newsViewModel:
+                            newsPagination!.elements.elementAt(index),
+                      );
+                      return element;
+                    },
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 16),
+                    itemCount: newsPagination!.totalCount >
+                            newsPagination!.elements.length
+                        ? newsPagination!.elements.length + 1
+                        : newsPagination!.elements.length,
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [CircularProgressIndicator()])
+            : Center(
+                child: Text(
+                  'Ошибка при загрузке событий',
+                  style: TextStyle(fontSize: 16, color: Colors.black),
+                ),
+              ));
   }
 }
 
