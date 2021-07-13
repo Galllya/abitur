@@ -1,5 +1,6 @@
 import 'package:abitur/models/event_model.dart';
 import 'package:abitur/models/news_model.dart';
+import 'package:abitur/one_event_page/one_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
@@ -14,12 +15,15 @@ class EventSectionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final DateTime now = DateTime.now();
-    final eventTime;
+    String? eventTime;
     if (_eventViewModel.dateFrom != null) {
-      eventTime =
-          "Через ${_eventViewModel.dateFrom!.difference(now).inDays ~/ 30} месяцев";
-    } else
-      eventTime = 'Точная дата пока неизвестна';
+      if (_eventViewModel.dateFrom!.difference(now).inDays < 0) {
+        //eventTime = 'no';
+      } else {
+        eventTime =
+            "Через ${_eventViewModel.dateFrom!.difference(now).inDays ~/ 30} месяцев";
+      }
+    }
 
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -36,24 +40,33 @@ class EventSectionCard extends StatelessWidget {
       child: Material(
         type: MaterialType.transparency,
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        OneEvent(eventViewModel: _eventViewModel)));
+          },
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 16, horizontal: 20),
             child: Column(
               children: [
-                Row(
-                  children: [
-                    Text(
-                      eventTime,
-                      style: TextStyle(
-                        fontSize: 14,
-                        height: 18 / 14,
-                        color: Colors.red.shade900,
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 16),
+                if (eventTime != null)
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 16),
+                    child: Row(
+                      children: [
+                        Text(
+                          eventTime,
+                          style: TextStyle(
+                            fontSize: 14,
+                            height: 18 / 14,
+                            color: Colors.red.shade900,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                 Row(
                   children: [
                     Expanded(

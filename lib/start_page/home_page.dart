@@ -36,6 +36,7 @@ class _HomePageState extends State<HomePage> {
         'http://abiturient.paraweb.media/api/v1/News?page=1&size=3';
     try {
       var response = await Dio().get(URL);
+      print(response);
 
       final pagination = PaginationModel.fromJson(response.data,
           (json) => NewsViewModel.fromJson(json as Map<String, dynamic>));

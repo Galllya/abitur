@@ -1,4 +1,5 @@
 import 'package:abitur/models/news_model.dart';
+import 'package:abitur/one_news_page/one_news.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
@@ -27,7 +28,13 @@ class NewsSectionCard extends StatelessWidget {
       child: Material(
         type: MaterialType.transparency,
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        OneNews(newsViewModel: _newsViewModel)));
+          },
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 16, horizontal: 20),
             child: Column(

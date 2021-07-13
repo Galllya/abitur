@@ -6,6 +6,7 @@ part 'event_model.g.dart';
   createToJson: false,
 )
 class EventViewModel {
+  final int id;
   final String title;
   final DateTime? dateFrom;
   final DateTime? dateTo;
@@ -24,7 +25,8 @@ class EventViewModel {
   final bool? isAvailable;
 
   EventViewModel(
-      {required this.title,
+      {required this.id,
+      required this.title,
       required this.text,
       required this.picture,
       required this.isFavorite,

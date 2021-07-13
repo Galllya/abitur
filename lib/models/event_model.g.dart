@@ -8,6 +8,7 @@ part of 'event_model.dart';
 
 EventViewModel _$EventViewModelFromJson(Map<String, dynamic> json) {
   return EventViewModel(
+    id: json['id'] as int,
     title: json['title'] as String,
     text: json['text'] as String?,
     picture: json['picture'] as String?,
