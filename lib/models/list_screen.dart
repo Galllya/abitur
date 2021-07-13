@@ -1,5 +1,13 @@
 import 'dart:async';
 
+import 'package:abitur/models/pagination_model.dart';
+import 'package:abitur/start_page/widgets/news_section_card.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+import 'news_model.dart';
+
 class ListScreen extends StatefulWidget {
   @override
   _ListScreenState createState() => _ListScreenState();
@@ -8,10 +16,36 @@ class ListScreen extends StatefulWidget {
 class _ListScreenState extends State<ListScreen> {
   final _scrollController = ScrollController();
 
+  final dio = Dio();
+  List<NewsViewModel> news = [];
+  bool haveConnection = true;
+  bool loadingNews = false;
+  bool loadingEvent = false;
+
   @override
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
+    loadnews();
+  }
+
+  loadnews() async {
+    final String URL =
+        'http://abiturient.paraweb.media/api/v1/News?page=1&size=100';
+    try {
+      var response = await Dio().get(URL);
+
+      final pagination = PaginationModel.fromJson(response.data,
+          (json) => NewsViewModel.fromJson(json as Map<String, dynamic>));
+      setState(() {
+        news = pagination.elements;
+        loadingNews = true;
+      });
+    } catch (e) {
+      haveConnection = false;
+      loadingNews = true;
+      throw Exception('Ошибка загрузки новостей');
+    }
   }
 
   void _onScroll() {
@@ -41,18 +75,17 @@ class _ListScreenState extends State<ListScreen> {
         padding: const EdgeInsets.all(16),
         itemBuilder: (BuildContext context, int index) {
           /// выводим индикатор загрузки, если индекс выходит за длину массива
-          if (index >= listWithElements.length)
-            return const LoadingIndicator();
+          if (index >= news.length) return const CircularProgressIndicator();
 
-          final element =
-          listWithElements.elementAt(index);
-          return Widget();
+          final element = NewsSectionCard(
+            newsViewModel: news.elementAt(index),
+          );
+          return element;
         },
-        separatorBuilder: (context, index) =>
-        const SizedBox(height: 16),
-        itemCount:
-        ? // число элементов списка равно числу элементов в списке(данных)
-        : // число элементов списка равно числу элементов в списке(данных) плюс один, чтобы вывести индикатор загрузки,
-    );
+        separatorBuilder: (context, index) => const SizedBox(height: 16),
+        itemCount: news
+            .length // число элементов списка равно числу элементов в списке(данных)
+        // число элементов списка равно числу элементов в списке(данных) плюс один, чтобы вывести индикатор загрузки,*/
+        );
   }
 }

@@ -10,6 +10,7 @@ class News extends StatefulWidget {
 }
 
 class _HomePageState extends State<News> {
+  final _scrollController = ScrollController();
   final dio = Dio();
   List<NewsViewModel> news = [];
   bool haveConnection = true;
@@ -20,6 +21,7 @@ class _HomePageState extends State<News> {
     // TODO: implement initState
     super.initState();
     loadnews();
+    _scrollController.addListener(_onScroll);
   }
 
   loadnews() async {
@@ -41,6 +43,26 @@ class _HomePageState extends State<News> {
     }
   }
 
+  void _onScroll() {
+    if (_isBottom) {
+      /// вызываем загрузку следующей страницы;
+    }
+  }
+
+  /// проверяем на достижения нижней позиции скролла
+  bool get _isBottom {
+    if (!_scrollController.hasClients) return false;
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.offset;
+    return currentScroll >= (maxScroll * 0.9);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,31 +70,43 @@ class _HomePageState extends State<News> {
         title: Text("Новости"),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: EdgeInsets.only(left: 20, right: 20, bottom: 16, top: 16),
-        child: loadingNews
-            ? haveConnection
-                ? ListView(
-                    children: List.generate(
-                      news.length,
-                      (index) => Padding(
-                          padding: EdgeInsets.only(
-                              bottom: index == news.length - 1 ? 0 : 8),
-                          child: NewsSectionCard(
-                            newsViewModel: news.elementAt(index),
-                          )),
-                    ),
-                  )
-                : Center(
-                    child: Text(
-                      'Ошибка при загрузке новостей',
-                      style: TextStyle(fontSize: 16, color: Colors.black),
-                    ),
-                  )
-            : Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [CircularProgressIndicator()]),
-      ),
+      body: loadingNews
+          ? haveConnection
+              ? ListView.separated(
+                  controller: _scrollController,
+                  padding: const EdgeInsets.all(16),
+                  itemBuilder: (BuildContext context, int index) {
+                    /// выводим индикатор загрузки, если индекс выходит за длину массива
+                    if (index >= news.length)
+                      return const CircularProgressIndicator();
+
+                    final element = NewsSectionCard(
+                      newsViewModel: news.elementAt(index),
+                    );
+                    return element;
+                  },
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: 16),
+                  itemCount: news.length)
+              : Center(
+                  child: Text(
+                    'Ошибка при загрузке новостей',
+                    style: TextStyle(fontSize: 16, color: Colors.black),
+                  ),
+                )
+          : Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [CircularProgressIndicator()]),
     );
   }
+}
+
+class PaginationNewsModel<T> {
+  final int totalCount;
+  final List<T> elements;
+
+  const PaginationNewsModel({
+    required this.elements,
+    required this.totalCount,
+  });
 }
