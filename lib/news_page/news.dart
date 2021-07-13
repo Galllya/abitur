@@ -30,6 +30,9 @@ class _HomePageState extends State<News> {
   }
 
   void loadNews(int page) async {
+    setState(() {
+      loadingNews = true;
+    });
     final String url =
         'http://abiturient.paraweb.media/api/v1/News?page=$page&size=10';
     try {
@@ -40,22 +43,28 @@ class _HomePageState extends State<News> {
       setState(() {
         print("currentPage: $currentPage          page: $page");
         currentPage = page;
-        newsPagination = PaginationModel<NewsViewModel>([
-          if (newsPagination != null) ...newsPagination!.elements,
-          ...pagination.elements,
-        ], pagination.totalCount);
-        loadingNews = true;
+        newsPagination = PaginationModel<NewsViewModel>(
+          [
+            if (newsPagination != null) ...newsPagination!.elements,
+            ...pagination.elements,
+          ],
+          pagination.totalCount,
+        );
+        loadingNews = false;
       });
     } catch (e) {
-      loadingNews = true;
+      setState(() {
+        loadingNews = false;
+      });
       throw Exception('Ошибка загрузки новостей');
     }
   }
 
   void _onScroll() {
-    if (newsPagination != null &&
-        newsPagination!.totalCount != newsPagination!.elements.length &&
-        loadingNews) if (_isBottom) {
+    // if (newsPagination != null &&
+    //     newsPagination!.totalCount != newsPagination!.elements.length &&
+    //     loadingNews)
+    if (_isBottom && !loadingNews) {
       loadNews(currentPage + 1);
     }
   }
