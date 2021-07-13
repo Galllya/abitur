@@ -38,6 +38,7 @@ class _HomePageState extends State<News> {
       final pagination = PaginationModel.fromJson(response.data,
           (json) => NewsViewModel.fromJson(json as Map<String, dynamic>));
       setState(() {
+        print("currentPage: $currentPage          page: $page");
         currentPage = page;
         newsPagination = PaginationModel<NewsViewModel>([
           if (newsPagination != null) ...newsPagination!.elements,
@@ -52,7 +53,9 @@ class _HomePageState extends State<News> {
   }
 
   void _onScroll() {
-    if (_isBottom) {
+    if (newsPagination != null &&
+        newsPagination!.totalCount != newsPagination!.elements.length &&
+        loadingNews) if (_isBottom) {
       loadNews(currentPage + 1);
     }
   }
