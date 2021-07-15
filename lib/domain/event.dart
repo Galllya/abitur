@@ -1,11 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'event_model.g.dart';
+part 'event.g.dart';
 
 @JsonSerializable(
   createToJson: false,
 )
-class EventViewModel {
+class EventArticle {
   final int id;
   final String title;
   final DateTime? dateFrom;
@@ -24,7 +24,7 @@ class EventViewModel {
   final bool? isInCalendar;
   final bool? isAvailable;
 
-  EventViewModel(
+  EventArticle(
       {required this.id,
       required this.title,
       required this.text,
@@ -43,6 +43,6 @@ class EventViewModel {
       required this.timeFrom,
       required this.timeTo});
 
-  factory EventViewModel.fromJson(Map<String, dynamic> json) =>
-      _$EventViewModelFromJson(json);
+  factory EventArticle.fromJson(Map<String, dynamic> json) =>
+      _$EventArticleFromJson(json);
 }

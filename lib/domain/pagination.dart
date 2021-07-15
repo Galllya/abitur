@@ -1,15 +1,15 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'pagination_model.g.dart';
+part 'pagination.g.dart';
 
 @JsonSerializable(genericArgumentFactories: true, createToJson: false)
-class PaginationModel<T> {
+class Pagination<T> {
   final List<T> elements;
   final int totalCount;
 
-  PaginationModel(this.elements, this.totalCount);
+  Pagination(this.elements, this.totalCount);
 
-  factory PaginationModel.fromJson(
+  factory Pagination.fromJson(
           Map<String, dynamic> json, T Function(Object? json) fromJsonT) =>
-      _$PaginationModelFromJson(json, fromJsonT);
+      _$PaginationFromJson(json, fromJsonT);
 }

@@ -1,15 +1,11 @@
-import 'dart:convert';
-
-import 'package:abitur/models/event_model.dart';
-import 'package:abitur/models/news_model.dart';
-import 'package:abitur/models/pagination_model.dart';
-import 'package:abitur/start_page/user.dart';
+import 'package:abitur/domain/event.dart';
+import 'package:abitur/domain/news.dart';
+import 'package:abitur/domain/pagination.dart';
 import 'package:abitur/start_page/widgets/event_section_card.dart';
 import 'package:abitur/start_page/widgets/news_section_card.dart';
 import 'package:abitur/start_page/widgets/section_header.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -18,8 +14,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final dio = Dio();
-  List<NewsViewModel> news = [];
-  List<EventViewModel> event = [];
+  List<NewsArticle> news = [];
+  List<EventArticle> event = [];
   bool haveConnection = true;
   bool loadingNews = false;
   bool loadingEvent = false;
@@ -38,8 +34,8 @@ class _HomePageState extends State<HomePage> {
       var response = await Dio().get(URL);
       print(response);
 
-      final pagination = PaginationModel.fromJson(response.data,
-          (json) => NewsViewModel.fromJson(json as Map<String, dynamic>));
+      final pagination = Pagination.fromJson(response.data,
+          (json) => NewsArticle.fromJson(json as Map<String, dynamic>));
       setState(() {
         news = pagination.elements;
         loadingNews = true;
@@ -57,8 +53,8 @@ class _HomePageState extends State<HomePage> {
     try {
       var response = await Dio().get(URL);
       print(response);
-      final pagination = PaginationModel.fromJson(response.data,
-          (json) => EventViewModel.fromJson(json as Map<String, dynamic>));
+      final pagination = Pagination.fromJson(response.data,
+          (json) => EventArticle.fromJson(json as Map<String, dynamic>));
       setState(() {
         event = pagination.elements;
         loadingEvent = true;

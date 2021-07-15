@@ -1,5 +1,6 @@
 import 'package:abitur/event_page/event.dart';
-import 'package:abitur/news_page/news.dart';
+import 'package:abitur/news_page/view/news.dart';
+import 'package:abitur/news_page/view/news_page.dart';
 import 'package:flutter/material.dart';
 
 class SectionHeader extends StatelessWidget {
@@ -31,8 +32,8 @@ class SectionHeader extends StatelessWidget {
           InkWell(
             onTap: () {
               title == 'Новости'
-                  ? Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => News()))
+                  ? Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => NewsPage()))
                   : Navigator.push(context,
                       MaterialPageRoute(builder: (context) => Event()));
             },

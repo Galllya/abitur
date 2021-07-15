@@ -1,13 +1,13 @@
-import 'package:abitur/models/news_model.dart';
+import 'package:abitur/domain/news.dart';
 import 'package:abitur/one_news_page/one_news.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
 class NewsSectionCard extends StatelessWidget {
-  final NewsViewModel _newsViewModel;
+  final NewsArticle _newsViewModel;
 
-  const NewsSectionCard({Key? key, required NewsViewModel newsViewModel})
+  const NewsSectionCard({Key? key, required NewsArticle newsViewModel})
       : _newsViewModel = newsViewModel,
         super(key: key);
 

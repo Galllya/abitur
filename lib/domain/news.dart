@@ -1,10 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
-part 'news_model.g.dart';
+part 'news.g.dart';
 
 @JsonSerializable(
   createToJson: false,
 )
-class NewsViewModel {
+class NewsArticle {
   final int id;
   final String title;
   final String? picture;
@@ -12,7 +12,7 @@ class NewsViewModel {
   final DateTime date;
   final bool isFavorite;
 
-  NewsViewModel(
+  NewsArticle(
       {required this.id,
       required this.title,
       required this.date,
@@ -20,6 +20,6 @@ class NewsViewModel {
       required this.picture,
       required this.text});
 
-  factory NewsViewModel.fromJson(Map<String, dynamic> json) =>
-      _$NewsViewModelFromJson(json);
+  factory NewsArticle.fromJson(Map<String, dynamic> json) =>
+      _$NewsArticleFromJson(json);
 }

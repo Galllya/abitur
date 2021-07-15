@@ -1,6 +1,4 @@
-import 'package:abitur/models/event_model.dart';
-import 'package:abitur/models/news_model.dart';
-import 'package:abitur/models/pagination_model.dart';
+import 'package:abitur/domain/event.dart';
 import 'package:abitur/style/theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
@@ -11,9 +9,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
 class OneEvent extends StatefulWidget {
-  final EventViewModel _eventViewModel;
+  final EventArticle _eventViewModel;
 
-  const OneEvent({Key? key, required EventViewModel eventViewModel})
+  const OneEvent({Key? key, required EventArticle eventViewModel})
       : _eventViewModel = eventViewModel;
 
   @override
@@ -22,7 +20,7 @@ class OneEvent extends StatefulWidget {
 
 class _OneEventState extends State<OneEvent> {
   final dio = Dio();
-  EventViewModel? event;
+  EventArticle? event;
   @override
   void initState() {
     // TODO: implement initState
@@ -36,7 +34,7 @@ class _OneEventState extends State<OneEvent> {
     try {
       var response = await Dio().get(URL);
       print(response);
-      final model = EventViewModel.fromJson(response.data);
+      final model = EventArticle.fromJson(response.data);
       setState(() {
         event = model;
       });

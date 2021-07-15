@@ -1,8 +1,6 @@
-import 'package:abitur/models/event_model.dart';
-import 'package:abitur/models/news_model.dart';
-import 'package:abitur/models/pagination_model.dart';
+import 'package:abitur/domain/event.dart';
+import 'package:abitur/domain/pagination.dart';
 import 'package:abitur/start_page/widgets/event_section_card.dart';
-import 'package:abitur/start_page/widgets/news_section_card.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -14,22 +12,23 @@ class Event extends StatefulWidget {
 class _HomePageState extends State<Event> {
   final _scrollController = ScrollController();
   final dio = Dio();
-  List<EventViewModel> event = [];
+
+  int currentPage = 1;
+  Pagination<EventArticle>? eventPagination;
+
   bool haveConnection = true;
   bool loadingEvent = false;
 
-  int currentPage = 1;
-  PaginationModel<EventViewModel>? eventPagination;
-
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+
     loadEvent(currentPage);
+
     _scrollController.addListener(_onScroll);
   }
 
-  loadEvent(int page) async {
+  void loadEvent(int page) async {
     if (eventPagination != null) {
       if (eventPagination!.elements.length == eventPagination!.totalCount) {
         return;
@@ -38,21 +37,16 @@ class _HomePageState extends State<Event> {
     setState(() {
       loadingEvent = true;
     });
-    final String URL =
+    final String url =
         'http://abiturient.paraweb.media/api/v1/Events?page=1&forAbiturients=false&calendar=false$page&size=10';
     try {
-      var response = await Dio().get(URL);
-      print(response);
-      final pagination = PaginationModel.fromJson(response.data,
-          (json) => EventViewModel.fromJson(json as Map<String, dynamic>));
-      setState(() {
-        event = pagination.elements;
-        loadingEvent = true;
-      });
+      var response = await dio.get(url);
 
+      final pagination = Pagination.fromJson(response.data,
+          (json) => EventArticle.fromJson(json as Map<String, dynamic>));
       setState(() {
         currentPage = page;
-        eventPagination = PaginationModel<EventViewModel>(
+        eventPagination = Pagination<EventArticle>(
           [
             if (eventPagination != null) ...eventPagination!.elements,
             ...pagination.elements,
@@ -63,17 +57,14 @@ class _HomePageState extends State<Event> {
       });
     } catch (e) {
       setState(() {
+        loadingEvent = false;
         haveConnection = false;
-        loadingEvent = true;
       });
       throw Exception('Ошибка загрузки событий');
     }
   }
 
   void _onScroll() {
-    // if (newsPagination != null &&
-    //     newsPagination!.totalCount != newsPagination!.elements.length &&
-    //     loadingNews)
     if (_isBottom && !loadingEvent) {
       loadEvent(currentPage + 1);
     }
@@ -97,7 +88,7 @@ class _HomePageState extends State<Event> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Мероприятния"),
+          title: Text("Мероприятия"),
           centerTitle: true,
         ),
         body: haveConnection

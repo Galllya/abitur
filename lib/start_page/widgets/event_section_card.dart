@@ -1,14 +1,13 @@
-import 'package:abitur/models/event_model.dart';
-import 'package:abitur/models/news_model.dart';
+import 'package:abitur/domain/event.dart';
 import 'package:abitur/one_event_page/one_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
 class EventSectionCard extends StatelessWidget {
-  final EventViewModel _eventViewModel;
+  final EventArticle _eventViewModel;
 
-  const EventSectionCard({Key? key, required EventViewModel eventViewModel})
+  const EventSectionCard({Key? key, required EventArticle eventViewModel})
       : _eventViewModel = eventViewModel,
         super(key: key);
 

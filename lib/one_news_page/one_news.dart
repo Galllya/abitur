@@ -1,6 +1,4 @@
-import 'package:abitur/models/news_model.dart';
-import 'package:abitur/models/pagination_model.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:abitur/domain/news.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +6,9 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
 
 class OneNews extends StatefulWidget {
-  final NewsViewModel _newsViewModel;
+  final NewsArticle _newsViewModel;
 
-  const OneNews({Key? key, required NewsViewModel newsViewModel})
+  const OneNews({Key? key, required NewsArticle newsViewModel})
       : _newsViewModel = newsViewModel,
         super(key: key);
 
@@ -20,7 +18,7 @@ class OneNews extends StatefulWidget {
 
 class _OneNewsState extends State<OneNews> {
   final dio = Dio();
-  NewsViewModel? news;
+  NewsArticle? news;
   @override
   void initState() {
     // TODO: implement initState
@@ -34,7 +32,7 @@ class _OneNewsState extends State<OneNews> {
     try {
       var response = await Dio().get(URL);
       print(response);
-      final model = NewsViewModel.fromJson(response.data);
+      final model = NewsArticle.fromJson(response.data);
       setState(() {
         news = model;
       });
