@@ -38,14 +38,8 @@ class _NewsListPageState extends State<NewsPage> {
       value: newsListBloc,
       child: Scaffold(
         appBar: AppBar(
-          actions: [
-            IconButton(
-                onPressed: () {
-                  newsListBloc.add(NewsReset());
-                },
-                icon: Icon(Icons.refresh))
-          ],
           title: Text('Новости'),
+          centerTitle: true,
         ),
         body: News(),
       ),

@@ -1,20 +1,20 @@
-import 'package:abitur/models/news_model.dart';
-import 'package:abitur/models/pagination_model.dart';
-import 'package:abitur/start_page/widgets/news_section_card.dart';
+import 'package:abitur/common/widgets/news_section_card.dart';
+import 'package:abitur/domain/news.dart';
+import 'package:abitur/domain/pagination.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-class News extends StatefulWidget {
+class NewsLater extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<News> {
+class _HomePageState extends State<NewsLater> {
   final _scrollController = ScrollController();
   final dio = Dio();
 
   int currentPage = 1;
-  PaginationModel<NewsViewModel>? newsPagination;
+  Pagination<NewsArticle>? newsPagination;
 
   bool haveConnection = true;
   bool loadingNews = false;
@@ -38,12 +38,12 @@ class _HomePageState extends State<News> {
     try {
       var response = await dio.get(url);
 
-      final pagination = PaginationModel.fromJson(response.data,
-          (json) => NewsViewModel.fromJson(json as Map<String, dynamic>));
+      final pagination = Pagination.fromJson(response.data,
+          (json) => NewsArticle.fromJson(json as Map<String, dynamic>));
       setState(() {
         print("currentPage: $currentPage          page: $page");
         currentPage = page;
-        newsPagination = PaginationModel<NewsViewModel>(
+        newsPagination = Pagination<NewsArticle>(
           [
             if (newsPagination != null) ...newsPagination!.elements,
             ...pagination.elements,

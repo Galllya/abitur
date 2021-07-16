@@ -8,14 +8,14 @@ abstract class INewsRepository {
 
   INewsRepository(this.newsProvider);
 
-  Future<Pagination<NewsArticle>> loadNews(int page, {int size = 20});
+  Future<Pagination<NewsArticle>> loadNews(int page, int size);
 }
 
 class NewsRepository extends INewsRepository {
   NewsRepository(NewsProvider newsProvider) : super(newsProvider);
 
   @override
-  Future<Pagination<NewsArticle>> loadNews(int page, {int size = 20}) {
+  Future<Pagination<NewsArticle>> loadNews(int page, int size) {
     return newsProvider.loadNews(page: page, size: size);
   }
 }

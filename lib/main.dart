@@ -1,4 +1,4 @@
-import 'package:abitur/start_page/home_page.dart';
+import 'package:abitur/start_page/view/start_page.dart';
 import 'package:abitur/style/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: primaryTheme,
-      home: HomePage(),
+      home: StartPage(),
     );
   }
 }

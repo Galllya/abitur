@@ -1,15 +1,16 @@
+import 'package:abitur/common/widgets/event_section_card.dart';
+import 'package:abitur/data/news_repository.dart';
 import 'package:abitur/domain/event.dart';
 import 'package:abitur/domain/pagination.dart';
-import 'package:abitur/start_page/widgets/event_section_card.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-class Event extends StatefulWidget {
+class EventLate extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<Event> {
+class _HomePageState extends State<EventLate> {
   final _scrollController = ScrollController();
   final dio = Dio();
 

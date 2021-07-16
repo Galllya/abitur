@@ -1,4 +1,5 @@
 import 'package:abitur/event_page/event.dart';
+import 'package:abitur/event_page/view/event_page.dart';
 import 'package:abitur/news_page/view/news.dart';
 import 'package:abitur/news_page/view/news_page.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ class SectionHeader extends StatelessWidget {
                   ? Navigator.push(context,
                       MaterialPageRoute(builder: (context) => NewsPage()))
                   : Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Event()));
+                      MaterialPageRoute(builder: (context) => EventPage()));
             },
             child: Text(
               buttonText,

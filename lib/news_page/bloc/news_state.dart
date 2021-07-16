@@ -17,7 +17,7 @@ class NewsState {
 
   const NewsState({
     this.currentPage = 0,
-    this.loading = true,
+    this.loading = false,
     this.news = const [],
   });
 

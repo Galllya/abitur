@@ -51,13 +51,13 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
     yield state.copyWith(loading: true);
     try {
       /// Загружаем данные
-      final news = await newsRepository.loadNews(event.page);
+      final news = await newsRepository.loadNews(event.page, 150);
 
       /// Отправляем в поток состояние, которое содержит уже новости и флаг загруки переключаем в false
       /// а также обновляем страницу
       yield state.copyWith(
         loading: false,
-        news: news.elements,
+        news: [if (state.currentPage > 0) ...state.news, ...news.elements],
         currentPage: event.page,
       );
     } catch (e) {

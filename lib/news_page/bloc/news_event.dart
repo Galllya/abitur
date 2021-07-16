@@ -10,6 +10,3 @@ class NewsLoaded extends NewsEvent {
 
   NewsLoaded({required this.page});
 }
-
-class NewsReset extends NewsEvent {}
-
