@@ -1,5 +1,5 @@
 import 'package:abitur/domain/news.dart';
-import 'package:abitur/one_news_page/one_news.dart';
+import 'package:abitur/one_news_page/view/one_news_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
@@ -33,7 +33,7 @@ class NewsSectionCard extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        OneNews(newsViewModel: _newsViewModel)));
+                        OneNewsPage(id: _newsViewModel.id.toInt())));
           },
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 16, horizontal: 20),

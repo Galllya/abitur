@@ -1,5 +1,5 @@
 import 'package:abitur/domain/event.dart';
-import 'package:abitur/one_event_page/one_event.dart';
+import 'package:abitur/one_event_page/view/one_event_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
@@ -44,7 +44,7 @@ class EventSectionCard extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        OneEvent(eventViewModel: _eventViewModel)));
+                        OneEventPage(id: _eventViewModel.id.toInt())));
           },
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 16, horizontal: 20),
