@@ -10,7 +10,7 @@ class NewsProvider extends DioProvider {
       {required int page, int? size}) async {
     try {
       final response = await dio.get(
-        'http://abiturient.paraweb.media/api/v1/News?page=$page&size=$size',
+        '/News?page=$page&size=$size',
       );
       return Pagination.fromJson(response.data,
           (json) => NewsArticle.fromJson(json as Map<String, dynamic>));
@@ -21,8 +21,8 @@ class NewsProvider extends DioProvider {
 
   Future<NewsArticle> loadOneNews({required int id}) async {
     try {
-      final String URL = 'http://abiturient.paraweb.media/api/v1/News/${id}';
-      var response = await Dio().get(URL);
+      final String URL = '/News/${id}';
+      var response = await dio.get(URL);
       final model = NewsArticle.fromJson(response.data);
       return model;
     } catch (e) {

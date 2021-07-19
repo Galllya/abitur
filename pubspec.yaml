@@ -37,6 +37,7 @@ dependencies:
   flutter_bloc: ^7.0.0
   provider: ^5.0.0
   pretty_dio_logger: ^1.1.1
+  retrofit: ^2.0.1
 
 
 

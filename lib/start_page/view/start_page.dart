@@ -22,10 +22,8 @@ class _StartListPageState extends State<StartPage> {
   void initState() {
     super.initState();
     startBloc = StartBloc(
-        newsRepository: NewsRepository(NewsProvider(Dio(BaseOptions(
-            connectTimeout: 2000, receiveTimeout: 2000, sendTimeout: 2000)))),
-        eventRepository: EventRepository(EventProvider(Dio(BaseOptions(
-            connectTimeout: 2000, receiveTimeout: 2000, sendTimeout: 2000)))))
+        newsRepository: context.read<NewsRepository>(),
+        eventRepository: context.read<EventRepository>())
       ..add(StartLoaded());
   }
 

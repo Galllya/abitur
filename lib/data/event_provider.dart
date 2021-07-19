@@ -21,8 +21,7 @@ class EventProvider extends DioProvider {
 
   Future<EventArticle> loadOneEvents({required int id}) async {
     try {
-      final String URL = 'http://abiturient.paraweb.media/api/v1/Events/${id}';
-      var response = await Dio().get(URL);
+      var response = await dio.get('/Events/${id}');
       final model = EventArticle.fromJson(response.data);
       return model;
     } catch (e) {
