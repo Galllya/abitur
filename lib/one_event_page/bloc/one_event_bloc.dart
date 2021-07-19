@@ -9,8 +9,8 @@ part 'one_event_event.dart';
 part 'one_event_state.dart';
 
 class OneEventBloc extends Bloc<OneEventEvent, OneEventState> {
-  final IEventRepository EventRepository;
-  OneEventBloc({required this.EventRepository}) : super(OneEventState());
+  final IEventRepository eventRepository;
+  OneEventBloc({required this.eventRepository}) : super(OneEventState());
 
   @override
   Stream<OneEventState> mapEventToState(
@@ -29,7 +29,7 @@ class OneEventBloc extends Bloc<OneEventEvent, OneEventState> {
 
     EventArticle? event;
     try {
-      event = await EventRepository.loadOneEvent(ev.id);
+      event = await eventRepository.loadOneEvent(ev.id);
     } catch (e) {}
 
     yield state.copyWith(

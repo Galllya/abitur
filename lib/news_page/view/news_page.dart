@@ -1,7 +1,5 @@
-import 'package:abitur/data/news_provider.dart';
 import 'package:abitur/data/news_repository.dart';
 import 'package:abitur/news_page/bloc/news_bloc.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,8 +19,7 @@ class _NewsListPageState extends State<NewsPage> {
   void initState() {
     super.initState();
     newsListBloc = NewsBloc(
-      newsRepository: NewsRepository(NewsProvider(Dio(BaseOptions(
-          connectTimeout: 2000, receiveTimeout: 2000, sendTimeout: 2000)))),
+      newsRepository: context.read<NewsRepository>(),
     )..add(NewsLoaded(page: 1));
   }
 

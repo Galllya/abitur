@@ -1,9 +1,8 @@
-import 'package:abitur/data/event_provider.dart';
 import 'package:abitur/data/event_repository.dart';
 import 'package:abitur/one_event_page/bloc/one_event_bloc.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 import 'one_event.dart';
 
@@ -22,8 +21,7 @@ class _OneEventListPageState extends State<OneEventPage> {
   void initState() {
     super.initState();
     oneEventBloc = OneEventBloc(
-      EventRepository: EventRepository(EventProvider(Dio(BaseOptions(
-          connectTimeout: 2000, receiveTimeout: 2000, sendTimeout: 2000)))),
+      eventRepository: context.read<EventRepository>(),
     )..add(OneEventLoaded(id: widget._id));
   }
 

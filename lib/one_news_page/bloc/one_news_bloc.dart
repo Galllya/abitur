@@ -9,9 +9,9 @@ part 'one_news_event.dart';
 part 'one_news_state.dart';
 
 class OneNewsBloc extends Bloc<OneNewsEvent, OneNewsState> {
-  final INewsRepository NewsRepository;
+  final INewsRepository newsRepository;
 
-  OneNewsBloc({required this.NewsRepository}) : super(OneNewsState());
+  OneNewsBloc({required this.newsRepository}) : super(OneNewsState());
 
   @override
   Stream<OneNewsState> mapEventToState(
@@ -29,7 +29,7 @@ class OneNewsBloc extends Bloc<OneNewsEvent, OneNewsState> {
 
     NewsArticle? news;
     try {
-      news = await NewsRepository.loadOneNews(ev.id);
+      news = await newsRepository.loadOneNews(ev.id);
     } catch (e) {}
 
     yield state.copyWith(
