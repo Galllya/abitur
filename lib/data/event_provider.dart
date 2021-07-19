@@ -18,4 +18,15 @@ class EventProvider extends DioProvider {
       rethrow;
     }
   }
+
+  Future<EventArticle> loadOneEvents({required int id}) async {
+    try {
+      final String URL = 'http://abiturient.paraweb.media/api/v1/Events/${id}';
+      var response = await Dio().get(URL);
+      final model = EventArticle.fromJson(response.data);
+      return model;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

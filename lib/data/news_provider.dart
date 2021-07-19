@@ -18,4 +18,15 @@ class NewsProvider extends DioProvider {
       rethrow;
     }
   }
+
+  Future<NewsArticle> loadOneNews({required int id}) async {
+    try {
+      final String URL = 'http://abiturient.paraweb.media/api/v1/News/${id}';
+      var response = await Dio().get(URL);
+      final model = NewsArticle.fromJson(response.data);
+      return model;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

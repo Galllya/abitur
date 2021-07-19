@@ -1,17 +1,14 @@
-import 'package:abitur/data/one_news_provider.dart';
-import 'package:abitur/data/one_news_repository.dart';
+import 'package:abitur/data/news_provider.dart';
+import 'package:abitur/data/news_repository.dart';
 import 'package:abitur/one_news_page/bloc/one_news_bloc.dart';
 import 'package:abitur/one_news_page/view/one_news.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
-
 class OneNewsPage extends StatefulWidget {
-  final int _id ;
+  final int _id;
   const OneNewsPage({Key? key, required int id}) : _id = id;
-
 
   @override
   _OneNewsListPageState createState() => _OneNewsListPageState();
@@ -23,9 +20,10 @@ class _OneNewsListPageState extends State<OneNewsPage> {
   @override
   void initState() {
     super.initState();
-    oneNewsBloc =
-    OneNewsBloc(oneNewsRepository: OneNewsRepository(OneNewsProvider(Dio(
-        BaseOptions(connectTimeout: 2000, receiveTimeout: 2000, sendTimeout: 2000)))),)..add(OneNewsLoaded(id: widget._id));
+    oneNewsBloc = OneNewsBloc(
+      NewsRepository: NewsRepository(NewsProvider(Dio(BaseOptions(
+          connectTimeout: 2000, receiveTimeout: 2000, sendTimeout: 2000)))),
+    )..add(OneNewsLoaded(id: widget._id));
   }
 
   @override

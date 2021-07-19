@@ -9,6 +9,7 @@ abstract class INewsRepository {
   INewsRepository(this.newsProvider);
 
   Future<Pagination<NewsArticle>> loadNews(int page, int size);
+  Future<NewsArticle> loadOneNews(int id);
 }
 
 class NewsRepository extends INewsRepository {
@@ -17,5 +18,10 @@ class NewsRepository extends INewsRepository {
   @override
   Future<Pagination<NewsArticle>> loadNews(int page, int size) {
     return newsProvider.loadNews(page: page, size: size);
+  }
+
+  @override
+  Future<NewsArticle> loadOneNews(int id) {
+    return newsProvider.loadOneNews(id: id);
   }
 }

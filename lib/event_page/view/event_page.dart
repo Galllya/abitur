@@ -37,7 +37,7 @@ class _EventListPageState extends State<EventPage> {
       value: eventBloc,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('События'),
+          title: Text('Мероприятия'),
           centerTitle: true,
         ),
         body: Event(),

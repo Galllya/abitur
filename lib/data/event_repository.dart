@@ -8,6 +8,7 @@ abstract class IEventRepository {
   IEventRepository(this.eventProvider);
 
   Future<Pagination<EventArticle>> loadEvents(int page, int size);
+  Future<EventArticle> loadOneEvent(int id);
 }
 
 class EventRepository extends IEventRepository {
@@ -16,5 +17,10 @@ class EventRepository extends IEventRepository {
   @override
   Future<Pagination<EventArticle>> loadEvents(int page, int size) {
     return eventProvider.loadEvents(page: page, size: size);
+  }
+
+  @override
+  Future<EventArticle> loadOneEvent(int id) {
+    return eventProvider.loadOneEvents(id: id);
   }
 }
