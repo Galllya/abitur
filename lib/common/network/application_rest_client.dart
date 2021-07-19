@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:abitur/domain/event.dart';
+import 'package:abitur/domain/news.dart';
 import 'package:abitur/domain/pagination.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
@@ -20,11 +21,22 @@ abstract class ApplicationRestClient {
 
   @GET('/$kEvents/')
   Future<Pagination<EventArticle>> loadEvents({
-    @Query('page') int page,
-    @Query('size') int size = _kPageSize,
+    @Query('page') required int page,
+    @Query('size') int? size = _kPageSize,
   });
   @GET('/$kEvents/{id}')
   Future<EventArticle> loadEvent({
-    @Path('id') int id,
+    @Path('id') required int id,
+  });
+
+  static const String kNews = 'News';
+  @GET('/$kNews/')
+  Future<Pagination<NewsArticle>> loadNews({
+    @Query('page') required int page,
+    @Query('size') int? size = _kPageSize,
+  });
+  @GET('/$kNews/{id}')
+  Future<NewsArticle> loadOneNews({
+    @Path('id') required int id,
   });
 }

@@ -1,32 +1,20 @@
 import 'package:abitur/common/data/provider.dart';
+import 'package:abitur/common/network/application_rest_client.dart';
+import 'package:abitur/data/rest_client_provider.dart';
 import 'package:abitur/domain/news.dart';
 import 'package:abitur/domain/pagination.dart';
 import 'package:dio/dio.dart';
 
-class NewsProvider extends DioProvider {
-  NewsProvider(Dio dio) : super(dio);
+class NewsProvider extends RestClientProvider {
+  NewsProvider(ApplicationRestClient applicationRestClient)
+      : super(applicationRestClient);
 
   Future<Pagination<NewsArticle>> loadNews(
       {required int page, int? size}) async {
-    try {
-      final response = await dio.get(
-        '/News?page=$page&size=$size',
-      );
-      return Pagination.fromJson(response.data,
-          (json) => NewsArticle.fromJson(json as Map<String, dynamic>));
-    } catch (e) {
-      rethrow;
-    }
+    return applicationRestClient.loadNews(page: page, size: size);
   }
 
   Future<NewsArticle> loadOneNews({required int id}) async {
-    try {
-      final String URL = '/News/${id}';
-      var response = await dio.get(URL);
-      final model = NewsArticle.fromJson(response.data);
-      return model;
-    } catch (e) {
-      rethrow;
-    }
+    return applicationRestClient.loadOneNews(id: id);
   }
 }

@@ -1,31 +1,20 @@
 import 'package:abitur/common/data/provider.dart';
+import 'package:abitur/common/network/application_rest_client.dart';
+import 'package:abitur/data/rest_client_provider.dart';
 import 'package:abitur/domain/event.dart';
 import 'package:abitur/domain/pagination.dart';
 import 'package:dio/dio.dart';
 
-class EventProvider extends DioProvider {
-  EventProvider(Dio dio) : super(dio);
+class EventProvider extends RestClientProvider {
+  EventProvider(ApplicationRestClient applicationRestClient)
+      : super(applicationRestClient);
 
   Future<Pagination<EventArticle>> loadEvents(
       {required int page, int? size}) async {
-    try {
-      final response = await dio.get(
-        '/Events?page=${page}&size=$size&forAbiturients=false&calendar=false',
-      );
-      return Pagination.fromJson(response.data,
-          (json) => EventArticle.fromJson(json as Map<String, dynamic>));
-    } catch (e) {
-      rethrow;
-    }
+    return applicationRestClient.loadEvents(page: page, size: size);
   }
 
   Future<EventArticle> loadOneEvents({required int id}) async {
-    try {
-      var response = await dio.get('/Events/${id}');
-      final model = EventArticle.fromJson(response.data);
-      return model;
-    } catch (e) {
-      rethrow;
-    }
+    return applicationRestClient.loadEvent(id: id);
   }
 }

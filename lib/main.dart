@@ -1,3 +1,4 @@
+import 'package:abitur/common/network/application_rest_client.dart';
 import 'package:abitur/data/event_repository.dart';
 import 'package:abitur/data/news_provider.dart';
 import 'package:abitur/data/news_repository.dart';
@@ -20,17 +21,10 @@ void main() async {
 
   final dio = Dio(options);
 
-  // dio.interceptors.add(PrettyDioLogger(
-  //     requestHeader: true,
-  //     requestBody: true,
-  //     responseBody: true,
-  //     responseHeader: false,
-  //     error: true,
-  //     compact: true,
-  //     maxWidth: 90));
+  final applicationRestClient = ApplicationRestClient(dio);
 
-  final newsProvider = NewsProvider(dio);
-  final eventProvider = EventProvider(dio);
+  final newsProvider = NewsProvider(applicationRestClient);
+  final eventProvider = EventProvider(applicationRestClient);
   final newsRepo = NewsRepository(newsProvider);
   final eventRepo = EventRepository(eventProvider);
   runApp(MultiProvider(providers: [
