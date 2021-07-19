@@ -36,6 +36,8 @@ dependencies:
   bloc: ^7.0.0
   flutter_bloc: ^7.0.0
   provider: ^5.0.0
+  pretty_dio_logger: ^1.1.1
+
 
 
 

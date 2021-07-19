@@ -10,7 +10,7 @@ class EventProvider extends DioProvider {
       {required int page, int? size}) async {
     try {
       final response = await dio.get(
-        'http://abiturient.paraweb.media/api/v1/Events?page=${page}&size=$size&forAbiturients=false&calendar=false',
+        '/Events?page=${page}&size=$size&forAbiturients=false&calendar=false',
       );
       return Pagination.fromJson(response.data,
           (json) => EventArticle.fromJson(json as Map<String, dynamic>));
