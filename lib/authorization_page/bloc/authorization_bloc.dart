@@ -1,7 +1,10 @@
 import 'dart:async';
 
+import 'package:abitur/common/network/errors/error_model.dart';
 import 'package:abitur/data/account_repository.dart';
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
 part 'authorization_event.dart';
@@ -23,6 +26,21 @@ class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
 
   Stream<AuthorizationState> _mapAuthorizationListSLoadedToState(
       LoginStarted loginStarted) async* {
-    accountRepository.authorize(loginStarted.login, loginStarted.password);
+    try {
+      yield state.copyWith(
+        formIsSent: true,
+      );
+      await accountRepository.authorize(
+          loginStarted.login, loginStarted.password);
+      print('nise');
+    } on DioError catch (e) {
+      print(ErrorModel.fromJson(e.response!.data).commonErrors);
+      yield state.copyWith(
+        textError: ErrorModel.fromJson(e.response!.data).commonErrors,
+      );
+    }
+    yield state.copyWith(
+      formIsSent: false,
+    );
   }
 }

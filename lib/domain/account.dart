@@ -8,12 +8,12 @@ class AccountData {
   final int id;
   final String firstName;
   final String lastName;
-  final String surName;
+  final String? surName;
   final String email;
   final String phoneNumber;
   final DateTime birthday;
-  final String country;
-  final String region;
+  final String? country;
+  final String? region;
   final String city;
   final int points;
   final int egePoints;

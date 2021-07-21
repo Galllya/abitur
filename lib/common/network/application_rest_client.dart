@@ -3,6 +3,7 @@ import 'package:abitur/domain/event.dart';
 import 'package:abitur/domain/news.dart';
 import 'package:abitur/domain/pagination.dart';
 import 'package:abitur/domain/token.dart';
+import 'package:abitur/domain/transfer_login_and_password.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -47,4 +48,9 @@ abstract class ApplicationRestClient {
   static const String kToken = 'Token';
   @GET('/$kToken')
   Future<TokenData> loadToken();
+
+  @POST('/$kToken')
+  Future<TokenData> authorize({
+    @Body() required LoginPasswordModel loginPasswordModel,
+  });
 }

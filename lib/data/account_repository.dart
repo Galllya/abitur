@@ -20,12 +20,18 @@ class AccountRepository extends IAccountRepository {
       : super(accountProvider, sharedPreferences);
 
   @override
-  Future<AccountData> loadAccount() {
+  Future<AccountData> loadAccount() async {
     return accountProvider.loadAccount();
   }
 
   @override
-  Future<TokenData> authorize(String email, String password) {
-    return accountProvider.authorize(email, password);
+  Future<TokenData> authorize(String email, String password) async {
+    try {
+      final res = await accountProvider.authorize(email, password);
+      sharedPreferences.setString('token', res.token);
+      return res;
+    } catch (e) {
+      rethrow;
+    }
   }
 }

@@ -3,15 +3,15 @@ part of 'authorization_bloc.dart';
 @immutable
 class AuthorizationState {
   final bool formIsSent;
-  final String textError;
+  final List<String> textError;
   final bool successfulAuthorization;
   const AuthorizationState(
       {this.formIsSent = false,
       this.successfulAuthorization = false,
-      this.textError = ""});
+      this.textError = const []});
   AuthorizationState copyWith({
     bool? formIsSent,
-    String? textError,
+    List<String>? textError,
     bool? successfulAuthorization,
   }) {
     return AuthorizationState(

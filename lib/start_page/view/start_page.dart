@@ -5,6 +5,7 @@ import 'package:abitur/start_page/bloc/start_bloc.dart';
 import 'package:abitur/start_page/view/start.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({Key? key}) : super(key: key);
@@ -15,6 +16,7 @@ class StartPage extends StatefulWidget {
 
 class _StartListPageState extends State<StartPage> {
   late StartBloc startBloc;
+  late SharedPreferences sharedPreferences;
 
   @override
   void initState() {
@@ -28,6 +30,7 @@ class _StartListPageState extends State<StartPage> {
   @override
   void dispose() {
     startBloc.close();
+    sharedPreferences.clear();
     super.dispose();
   }
 
