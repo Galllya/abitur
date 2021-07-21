@@ -1,8 +1,8 @@
-import 'dart:io';
-
+import 'package:abitur/domain/account.dart';
 import 'package:abitur/domain/event.dart';
 import 'package:abitur/domain/news.dart';
 import 'package:abitur/domain/pagination.dart';
+import 'package:abitur/domain/token.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -39,4 +39,12 @@ abstract class ApplicationRestClient {
   Future<NewsArticle> loadOneNews({
     @Path('id') required int id,
   });
+
+  static const String kAccount = 'Account';
+  @GET('/$kAccount')
+  Future<AccountData> loadAccount();
+
+  static const String kToken = 'Token';
+  @GET('/$kToken')
+  Future<TokenData> loadToken();
 }

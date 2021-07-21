@@ -1,9 +1,7 @@
-import 'package:abitur/common/data/provider.dart';
 import 'package:abitur/common/network/application_rest_client.dart';
 import 'package:abitur/data/rest_client_provider.dart';
 import 'package:abitur/domain/event.dart';
 import 'package:abitur/domain/pagination.dart';
-import 'package:dio/dio.dart';
 
 class EventProvider extends RestClientProvider {
   EventProvider(ApplicationRestClient applicationRestClient)
