@@ -11,6 +11,9 @@ class Authorization extends StatefulWidget {
 }
 
 class _AuthorizationtListState extends State<Authorization> {
+  final loginController = TextEditingController();
+  final passwordController = TextEditingController();
+
   @override
   void initState() {
     var account = context.read<AccountRepository>();
@@ -47,6 +50,7 @@ class _AuthorizationtListState extends State<Authorization> {
                   height: 42,
                 ),
                 TextField(
+                  controller: loginController,
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.black,
@@ -59,6 +63,7 @@ class _AuthorizationtListState extends State<Authorization> {
                   height: 8,
                 ),
                 TextField(
+                  controller: passwordController,
                   obscureText: true,
                   obscuringCharacter: '*',
                   style: TextStyle(
@@ -95,7 +100,12 @@ class _AuthorizationtListState extends State<Authorization> {
                     children: [
                       Expanded(
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            String login = loginController.text;
+                            String password = passwordController.text;
+                            context.read<AuthorizationBloc>().add(
+                                LoginStarted(login: login, password: password));
+                          },
                           child: Text(
                             'Войти',
                             style: TextStyle(color: Colors.white, fontSize: 16),

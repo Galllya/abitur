@@ -26,6 +26,6 @@ class AccountRepository extends IAccountRepository {
 
   @override
   Future<TokenData> authorize(String email, String password) {
-    return accountProvider.authorize();
+    return accountProvider.authorize(email, password);
   }
 }

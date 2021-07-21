@@ -1,5 +1,6 @@
 import 'package:abitur/authorization_page/bloc/authorization_bloc.dart';
 import 'package:abitur/authorization_page/view/authorization.dart';
+import 'package:abitur/data/account_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,7 +17,9 @@ class _AuthorizationListPageState extends State<AuthorizationPage> {
   @override
   void initState() {
     super.initState();
-    authorizationBloc = AuthorizationBloc();
+    authorizationBloc = AuthorizationBloc(
+      accountRepository: context.read<AccountRepository>(),
+    );
   }
 
   @override

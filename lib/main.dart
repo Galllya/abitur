@@ -15,6 +15,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'data/event_provider.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting('ru_RU', null);
   var options = BaseOptions(
       baseUrl: 'http://abiturient.paraweb.media/api/v1',
