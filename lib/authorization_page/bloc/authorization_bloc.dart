@@ -32,7 +32,9 @@ class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
       );
       await accountRepository.authorize(
           loginStarted.login, loginStarted.password);
-      print('nise');
+      yield state.copyWith(
+        successfulAuthorization: true,
+      );
     } on DioError catch (e) {
       print(ErrorModel.fromJson(e.response!.data).commonErrors);
       yield state.copyWith(

@@ -1,4 +1,3 @@
-import 'package:abitur/authorization_page/view/authorization_page.dart';
 import 'package:abitur/data/event_repository.dart';
 import 'package:abitur/data/news_repository.dart';
 import 'package:abitur/start_page/bloc/start_bloc.dart';
@@ -30,7 +29,6 @@ class _StartListPageState extends State<StartPage> {
   @override
   void dispose() {
     startBloc.close();
-    sharedPreferences.clear();
     super.dispose();
   }
 
@@ -40,18 +38,17 @@ class _StartListPageState extends State<StartPage> {
       value: startBloc,
       child: Scaffold(
         appBar: AppBar(
-            title: Text('Главная'),
-            centerTitle: true,
-            leading: IconButton(
-              icon: Icon(Icons.comment),
-              color: Theme.of(context).iconTheme.color,
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => AuthorizationPage()));
-              },
-            )),
+          title: Text('Главная'),
+          centerTitle: true,
+          // leading: IconButton(
+          //   icon: Icon(Icons.comment),
+          //   color: Theme.of(context).iconTheme.color,
+          //   onPressed: () {
+          //     Navigator.push(context,
+          //         MaterialPageRoute(builder: (context) => AuthorizationPage()));
+          //   },
+          // ),
+        ),
         body: Start(),
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:abitur/authorization_page/view/authorization_page.dart';
 import 'package:abitur/common/network/application_rest_client.dart';
 import 'package:abitur/common/network/interceptors/token_interceptor.dart';
 import 'package:abitur/data/account_provider.dart';
@@ -5,7 +6,6 @@ import 'package:abitur/data/account_repository.dart';
 import 'package:abitur/data/event_repository.dart';
 import 'package:abitur/data/news_provider.dart';
 import 'package:abitur/data/news_repository.dart';
-import 'package:abitur/start_page/view/start_page.dart';
 import 'package:abitur/style/theme.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: primaryTheme,
-      home: StartPage(),
+      home: AuthorizationPage(),
     );
   }
 }
