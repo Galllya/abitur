@@ -77,9 +77,9 @@ class _StartListPageState extends State<StartPage> {
                     Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) => StartPage()));
                   }),
-              if (account.isLoading)
-                BlocBuilder<AccountBloc, AccountState>(
-                    builder: (BuildContext context, AccountState state) {
+              BlocBuilder<AccountBloc, AccountState>(
+                  builder: (BuildContext context, AccountState state) {
+                if (state.isLoading)
                   return ListTile(
                       title: new Text("Профиль"),
                       leading: Icon(Icons.home),
@@ -89,7 +89,9 @@ class _StartListPageState extends State<StartPage> {
                             MaterialPageRoute(
                                 builder: (context) => ProfilePage()));
                       });
-                }),
+                else
+                  return SizedBox();
+              }),
             ],
           ),
         ),
