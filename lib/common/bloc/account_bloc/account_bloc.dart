@@ -29,7 +29,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   Stream<AccountState> _mapAccountStateLoadingProfileDate() async* {
     try {
       final account = await accountRepository.loadAccount();
-      state.copyWith(
+      yield state.copyWith(
         accountData: account,
         isLoading: true,
       );
@@ -37,6 +37,10 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   }
 
   Stream<AccountState> _mapAccountStateLogOutOfProfile() async* {
+    yield state.copyWith(
+      accountData: null,
+      isLoading: false,
+    );
     sharedPreferences.clear();
   }
 }

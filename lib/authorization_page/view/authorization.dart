@@ -39,7 +39,7 @@ class _AuthorizationtListState extends State<Authorization> {
             ),
           );
         if (state.successfulAuthorization)
-          Navigator.push(
+          Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => StartPage()));
         context.read<AccountBloc>().add(LoadingProfileData());
       },
