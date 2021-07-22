@@ -1,5 +1,7 @@
+import 'package:abitur/common/bloc/account_bloc/account_bloc.dart';
 import 'package:abitur/data/event_repository.dart';
 import 'package:abitur/data/news_repository.dart';
+import 'package:abitur/initialization_page/view/initialization_page.dart';
 import 'package:abitur/start_page/bloc/start_bloc.dart';
 import 'package:abitur/start_page/view/start.dart';
 import 'package:flutter/material.dart';
@@ -40,14 +42,17 @@ class _StartListPageState extends State<StartPage> {
         appBar: AppBar(
           title: Text('Главная'),
           centerTitle: true,
-          // leading: IconButton(
-          //   icon: Icon(Icons.comment),
-          //   color: Theme.of(context).iconTheme.color,
-          //   onPressed: () {
-          //     Navigator.push(context,
-          //         MaterialPageRoute(builder: (context) => AuthorizationPage()));
-          //   },
-          // ),
+          leading: IconButton(
+            icon: Icon(Icons.comment),
+            color: Theme.of(context).iconTheme.color,
+            onPressed: () {
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) => InitializationPage()));
+              context.read<AccountBloc>().add(LogOutOfProfile());
+            },
+          ),
         ),
         body: Start(),
       ),

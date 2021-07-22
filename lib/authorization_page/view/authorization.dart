@@ -118,39 +118,47 @@ class _AuthorizationtListState extends State<Authorization> {
                       children: [
                         Expanded(
                           child: TextButton(
-                              onPressed: state.formIsSent
-                                  ? null
-                                  : () {
-                                      String login = loginController.text;
-                                      String password = passwordController.text;
-                                      context.read<AuthorizationBloc>().add(
-                                          LoginStarted(
-                                              login: login,
-                                              password: password));
-                                    },
-                              child: AnimatedSwitcher(
-                                duration: Duration(milliseconds: 300),
-                                child: state.formIsSent
-                                    ? CircularProgressIndicator(
-                                        color: Colors.white,
-                                      )
-                                    : Text(
-                                        'Войти',
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 16),
-                                      ),
-                              )),
+                            onPressed: state.formIsSent
+                                ? null
+                                : () {
+                                    String login = loginController.text;
+                                    String password = passwordController.text;
+                                    context.read<AuthorizationBloc>().add(
+                                        LoginStarted(
+                                            login: login, password: password));
+                                  },
+                            child: AnimatedSwitcher(
+                              duration: Duration(milliseconds: 300),
+                              child: state.formIsSent
+                                  ? CircularProgressIndicator(
+                                      color: Colors.white,
+                                    )
+                                  : Text(
+                                      'Войти',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 16),
+                                    ),
+                            ),
+                          ),
                         ),
                       ],
                     ),
                     SizedBox(
                       height: 20,
                     ),
-                    Text(
-                      'Войти без регистрации',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0XFF909090),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => StartPage()));
+                      },
+                      child: Text(
+                        'Войти без регистрации',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color(0XFF909090),
+                        ),
                       ),
                     ),
                     SizedBox(

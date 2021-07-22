@@ -6,12 +6,16 @@ import 'package:abitur/data/account_repository.dart';
 import 'package:abitur/data/event_repository.dart';
 import 'package:abitur/data/news_provider.dart';
 import 'package:abitur/data/news_repository.dart';
+import 'package:abitur/initialization_page/view/initialization.dart';
+import 'package:abitur/initialization_page/view/initialization_page.dart';
 import 'package:abitur/style/theme.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'common/bloc/account_bloc/account_bloc.dart';
 import 'data/event_provider.dart';
 
 void main() async {
@@ -35,11 +39,17 @@ void main() async {
   final accountRepo = AccountRepository(accountProvider, sharedPreferences);
   final newsRepo = NewsRepository(newsProvider);
   final eventRepo = EventRepository(eventProvider);
-  runApp(MultiProvider(providers: [
-    Provider<EventRepository>.value(value: eventRepo),
-    Provider<NewsRepository>.value(value: newsRepo),
-    Provider<AccountRepository>.value(value: accountRepo),
-  ], child: MyApp()));
+  runApp(
+    BlocProvider(
+      create: (context) => AccountBloc(sharedPreferences),
+      child: MultiProvider(providers: [
+        Provider<EventRepository>.value(value: eventRepo),
+        Provider<NewsRepository>.value(value: newsRepo),
+        Provider<AccountRepository>.value(value: accountRepo),
+        Provider<SharedPreferences>.value(value: sharedPreferences),
+      ], child: MyApp()),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -48,7 +58,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: primaryTheme,
-      home: AuthorizationPage(),
+      home: InitializationPage(),
     );
   }
 }
