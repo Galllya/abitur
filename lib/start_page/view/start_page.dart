@@ -70,20 +70,26 @@ class _StartListPageState extends State<StartPage> {
                   accountEmail: Text("емейл пользователя"),
                 ),
               ),
-              new ListTile(
+              ListTile(
                   title: new Text("Главная"),
                   leading: Icon(Icons.home),
                   onTap: () {
                     Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) => StartPage()));
                   }),
-              new ListTile(
-                  title: new Text("Профиль"),
-                  leading: Icon(Icons.home),
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ProfilePage()));
-                  }),
+              if (account.isLoading)
+                BlocBuilder<AccountBloc, AccountState>(
+                    builder: (BuildContext context, AccountState state) {
+                  return ListTile(
+                      title: new Text("Профиль"),
+                      leading: Icon(Icons.home),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProfilePage()));
+                      });
+                }),
             ],
           ),
         ),

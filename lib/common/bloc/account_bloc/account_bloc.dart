@@ -37,10 +37,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   }
 
   Stream<AccountState> _mapAccountStateLogOutOfProfile() async* {
-    yield state.copyWith(
-      accountData: null,
-      isLoading: false,
-    );
     sharedPreferences.clear();
+    yield AccountState();
   }
 }
