@@ -18,11 +18,11 @@ class OneNewsBloc extends Bloc<OneNewsEvent, OneNewsState> {
     OneNewsEvent event,
   ) async* {
     if (event is OneNewsLoaded) {
-      yield* _mapOneNewsListSLoadedToState(event);
+      yield* _mapOneNewsSLoadedToState(event);
     }
   }
 
-  Stream<OneNewsState> _mapOneNewsListSLoadedToState(OneNewsLoaded ev) async* {
+  Stream<OneNewsState> _mapOneNewsSLoadedToState(OneNewsLoaded ev) async* {
     yield state.copyWith(
       isLoading: true,
     );

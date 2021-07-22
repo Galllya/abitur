@@ -17,12 +17,11 @@ class OneEventBloc extends Bloc<OneEventEvent, OneEventState> {
     OneEventEvent event,
   ) async* {
     if (event is OneEventLoaded) {
-      yield* _mapOneEventListSLoadedToState(event);
+      yield* _mapOneEventSLoadedToState(event);
     }
   }
 
-  Stream<OneEventState> _mapOneEventListSLoadedToState(
-      OneEventLoaded ev) async* {
+  Stream<OneEventState> _mapOneEventSLoadedToState(OneEventLoaded ev) async* {
     yield state.copyWith(
       isLoading: true,
     );

@@ -20,11 +20,11 @@ class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
     AuthorizationEvent event,
   ) async* {
     if (event is LoginStarted) {
-      yield* _mapAuthorizationListSLoadedToState(event);
+      yield* _mapAuthorizationSLoadedToState(event);
     }
   }
 
-  Stream<AuthorizationState> _mapAuthorizationListSLoadedToState(
+  Stream<AuthorizationState> _mapAuthorizationSLoadedToState(
       LoginStarted loginStarted) async* {
     try {
       yield state.copyWith(

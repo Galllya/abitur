@@ -2,8 +2,8 @@ part of 'initialization_bloc.dart';
 
 @immutable
 class InitializationState {
-  final bool isLogged;
-  const InitializationState({this.isLogged = false});
+  final bool? isLogged;
+  const InitializationState({this.isLogged = null});
   InitializationState copyWith({
     bool? isLogged,
   }) {

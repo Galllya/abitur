@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:abitur/data/account_repository.dart';
 import 'package:abitur/domain/account.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
@@ -10,22 +11,32 @@ part 'account_state.dart';
 
 class AccountBloc extends Bloc<AccountEvent, AccountState> {
   final SharedPreferences sharedPreferences;
-  AccountBloc(this.sharedPreferences) : super(AccountState());
+  final IAccountRepository accountRepository;
+  AccountBloc(this.sharedPreferences, this.accountRepository)
+      : super(AccountState());
 
   @override
   Stream<AccountState> mapEventToState(
     AccountEvent event,
   ) async* {
     if (event is LoadingProfileData) {
-      yield* _mapAccountStateListLoadingProfileDate();
+      yield* _mapAccountStateLoadingProfileDate();
     } else if (event is LogOutOfProfile) {
-      yield* _mapAccountStateListLogOutOfProfile();
+      yield* _mapAccountStateLogOutOfProfile();
     }
   }
 
-  Stream<AccountState> _mapAccountStateListLoadingProfileDate() async* {}
+  Stream<AccountState> _mapAccountStateLoadingProfileDate() async* {
+    try {
+      final account = await accountRepository.loadAccount();
+      state.copyWith(
+        accountData: account,
+        isLoading: true,
+      );
+    } catch (e) {}
+  }
 
-  Stream<AccountState> _mapAccountStateListLogOutOfProfile() async* {
+  Stream<AccountState> _mapAccountStateLogOutOfProfile() async* {
     sharedPreferences.clear();
   }
 }

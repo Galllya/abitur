@@ -41,7 +41,7 @@ void main() async {
   final eventRepo = EventRepository(eventProvider);
   runApp(
     BlocProvider(
-      create: (context) => AccountBloc(sharedPreferences),
+      create: (context) => AccountBloc(sharedPreferences, accountRepo),
       child: MultiProvider(providers: [
         Provider<EventRepository>.value(value: eventRepo),
         Provider<NewsRepository>.value(value: newsRepo),

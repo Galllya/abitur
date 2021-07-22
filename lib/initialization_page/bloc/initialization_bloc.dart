@@ -18,11 +18,11 @@ class InitializationBloc
     InitializationEvent event,
   ) async* {
     if (event is LoadingEvent) {
-      yield* _mapInitializationStateListLiadingEvent();
+      yield* _mapInitializationStateLiadingEvent();
     }
   }
 
-  Stream<InitializationState> _mapInitializationStateListLiadingEvent() async* {
+  Stream<InitializationState> _mapInitializationStateLiadingEvent() async* {
     String? isToken = await sharedPreferences.getString('token');
     if (isToken != null) {
       yield state.copyWith(

@@ -18,11 +18,12 @@ class _InitializationState extends State<Initialization> {
   Widget build(BuildContext context) {
     return BlocListener<InitializationBloc, InitializationState>(
       listener: (BuildContext context, InitializationState state) {
-        if (state.isLogged) {
-          Navigator.push(
+        if (state.isLogged!) {
+          Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => StartPage()));
+          context.read<AccountBloc>().add(LoadingProfileData());
         } else {
-          Navigator.push(context,
+          Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => AuthorizationPage()));
         }
       },

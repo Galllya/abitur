@@ -1,4 +1,5 @@
 import 'package:abitur/authorization_page/bloc/authorization_bloc.dart';
+import 'package:abitur/common/bloc/account_bloc/account_bloc.dart';
 import 'package:abitur/start_page/view/start_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +41,7 @@ class _AuthorizationtListState extends State<Authorization> {
         if (state.successfulAuthorization)
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => StartPage()));
+        context.read<AccountBloc>().add(LoadingProfileData());
       },
       child: BlocBuilder<AuthorizationBloc, AuthorizationState>(
           builder: (BuildContext context, AuthorizationState state) {
