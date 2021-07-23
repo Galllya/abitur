@@ -30,8 +30,7 @@ class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
       yield state.copyWith(
         formIsSent: true,
       );
-      await accountRepository.authorize(
-          loginStarted.login, loginStarted.password);
+      await accountRepository.authorize(loginStarted.logAndPas);
       yield state.copyWith(
         successfulAuthorization: true,
       );

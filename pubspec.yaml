@@ -39,7 +39,7 @@ dependencies:
   pretty_dio_logger: ^1.1.1
   retrofit: ^2.0.1
   shared_preferences: ^2.0.6
-
+  reactive_forms: ^10.5.0
 
 
 

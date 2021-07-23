@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:reactive_forms/reactive_forms.dart';
 part 'transfer_login_and_password.g.dart';
 
 @JsonSerializable()
@@ -15,4 +16,7 @@ class LoginPasswordModel {
 
   @override
   String toString() => toJson().toString();
+
+  factory LoginPasswordModel.fromJson(Map<String, dynamic> json) =>
+      _$LoginPasswordModelFromJson(json);
 }

@@ -12,9 +12,8 @@ class AccountProvider extends RestClientProvider {
     return applicationRestClient.loadAccount();
   }
 
-  Future<TokenData> authorize(String email, String password) async {
+  Future<TokenData> authorize(Map<String, dynamic> form) async {
     return applicationRestClient.authorize(
-        loginPasswordModel:
-            LoginPasswordModel(email: email, password: password));
+        loginPasswordModel: LoginPasswordModel.fromJson(form));
   }
 }

@@ -4,6 +4,7 @@ import 'package:abitur/start_page/view/start_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:reactive_forms/reactive_forms.dart';
 
 class Authorization extends StatefulWidget {
   const Authorization({Key? key}) : super(key: key);
@@ -19,6 +20,10 @@ class _AuthorizationtListState extends State<Authorization> {
   final loginController = TextEditingController();
   final passwordController = TextEditingController();
 
+  final form = FormGroup({
+    'email': FormControl<String>(),
+    'password': FormControl<String>(),
+  });
   @override
   void initState() {
     // var account = context.read<AccountRepository>();
@@ -69,31 +74,53 @@ class _AuthorizationtListState extends State<Authorization> {
                   SizedBox(
                     height: 42,
                   ),
-                  TextField(
-                    controller: loginController,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                    ),
-                    decoration: InputDecoration(
-                      labelText: "Логин",
-                    ),
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  TextField(
-                    controller: passwordController,
-                    obscureText: true,
-                    obscuringCharacter: '*',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                    ),
-                    decoration: InputDecoration(
-                      labelText: "Код подтверждения",
+
+                  ReactiveForm(
+                    formGroup: this.form,
+                    child: Column(
+                      children: <Widget>[
+                        ReactiveTextField(
+                          formControlName: 'email',
+                          decoration: InputDecoration(
+                            labelText: 'Логин',
+                          ),
+                        ),
+                        ReactiveTextField(
+                          formControlName: 'password',
+                          obscureText: true,
+                          obscuringCharacter: '*',
+                          decoration: InputDecoration(
+                            labelText: 'Код подтверждения',
+                          ),
+                        ),
+                      ],
                     ),
                   ),
+                  // TextField(
+                  //   controller: loginController,
+                  //   style: TextStyle(
+                  //     fontSize: 16,
+                  //     color: Colors.black,
+                  //   ),
+                  //   decoration: InputDecoration(
+                  //     labelText: "Логин",
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   height: 8,
+                  // ),
+                  // TextField(
+                  //   controller: passwordController,
+                  //   obscureText: true,
+                  //   obscuringCharacter: '*',
+                  //   style: TextStyle(
+                  //     fontSize: 16,
+                  //     color: Colors.black,
+                  //   ),
+                  //   decoration: InputDecoration(
+                  //     labelText: "Код подтверждения",
+                  //   ),
+                  // ),
                   SizedBox(
                     height: 24,
                   ),
@@ -126,8 +153,7 @@ class _AuthorizationtListState extends State<Authorization> {
                                     String login = loginController.text;
                                     String password = passwordController.text;
                                     context.read<AuthorizationBloc>().add(
-                                        LoginStarted(
-                                            login: login, password: password));
+                                        LoginStarted(logAndPas: form.controls));
                                   },
                             child: AnimatedSwitcher(
                               duration: Duration(milliseconds: 300),

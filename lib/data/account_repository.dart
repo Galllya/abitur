@@ -11,7 +11,7 @@ abstract class IAccountRepository {
   IAccountRepository(this.accountProvider, this.sharedPreferences);
 
   Future<AccountData> loadAccount();
-  Future<TokenData> authorize(String email, String password);
+  Future<TokenData> authorize(Map<String, dynamic> form);
 }
 
 class AccountRepository extends IAccountRepository {
@@ -25,9 +25,9 @@ class AccountRepository extends IAccountRepository {
   }
 
   @override
-  Future<TokenData> authorize(String email, String password) async {
+  Future<TokenData> authorize(Map<String, dynamic> form) async {
     try {
-      final res = await accountProvider.authorize(email, password);
+      final res = await accountProvider.authorize(form);
       sharedPreferences.setString('token', res.token);
       return res;
     } catch (e) {
