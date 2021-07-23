@@ -7,3 +7,5 @@ class OneNewsLoaded extends OneNewsEvent {
   final int id;
   OneNewsLoaded({required this.id});
 }
+
+class ChangedFavorites extends OneNewsEvent {}

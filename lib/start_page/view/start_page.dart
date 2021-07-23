@@ -1,3 +1,4 @@
+import 'package:abitur/authorization_page/view/authorization_page.dart';
 import 'package:abitur/common/bloc/account_bloc/account_bloc.dart';
 import 'package:abitur/data/event_repository.dart';
 import 'package:abitur/data/news_repository.dart';
@@ -6,6 +7,7 @@ import 'package:abitur/profile_page/view/profile.dart';
 import 'package:abitur/profile_page/view/profile_page.dart';
 import 'package:abitur/start_page/bloc/start_bloc.dart';
 import 'package:abitur/start_page/view/start.dart';
+import 'package:abitur/start_page/view/widgets/drawer.dart';
 import 'package:abitur/style/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -58,43 +60,7 @@ class _StartListPageState extends State<StartPage> {
           //   },
           // ),
         ),
-        drawer: Drawer(
-          child: new ListView(
-            children: <Widget>[
-              new DrawerHeader(
-                margin: EdgeInsets.zero,
-                padding: EdgeInsets.zero,
-                child: UserAccountsDrawerHeader(
-                  decoration: BoxDecoration(color: primaryTheme.primaryColor),
-                  accountName: Text('имя пользовалеля'),
-                  accountEmail: Text("емейл пользователя"),
-                ),
-              ),
-              ListTile(
-                  title: new Text("Главная"),
-                  leading: Icon(Icons.home),
-                  onTap: () {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => StartPage()));
-                  }),
-              BlocBuilder<AccountBloc, AccountState>(
-                  builder: (BuildContext context, AccountState state) {
-                if (state.isLoading)
-                  return ListTile(
-                      title: new Text("Профиль"),
-                      leading: Icon(Icons.home),
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ProfilePage()));
-                      });
-                else
-                  return SizedBox();
-              }),
-            ],
-          ),
-        ),
+        drawer: Draver(),
         body: Start(),
       ),
     );

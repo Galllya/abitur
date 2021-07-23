@@ -53,4 +53,14 @@ abstract class ApplicationRestClient {
   Future<TokenData> authorize({
     @Body() required LoginPasswordModel loginPasswordModel,
   });
+
+  @POST('/$kNews/{id}/Favorite')
+  Future<void> addToFavourites({
+    @Path('id') required int id,
+  });
+
+  @DELETE('/$kNews/{id}/Favorite')
+  Future<void> deleteToFavourites({
+    @Path('id') required int id,
+  });
 }

@@ -21,8 +21,18 @@ class _AuthorizationtListState extends State<Authorization> {
   final passwordController = TextEditingController();
 
   final form = FormGroup({
-    'email': FormControl<String>(),
-    'password': FormControl<String>(),
+    'email': FormControl<String>(
+      value: 'admin@mail.ru',
+      validators: [
+        Validators.minLength(0),
+        Validators.required,
+        Validators.email,
+      ],
+    ),
+    'password': FormControl<String>(value: 'P_assword1', validators: [
+      Validators.required,
+      Validators.minLength(0),
+    ]),
   });
   @override
   void initState() {
@@ -74,7 +84,6 @@ class _AuthorizationtListState extends State<Authorization> {
                   SizedBox(
                     height: 42,
                   ),
-
                   ReactiveForm(
                     formGroup: this.form,
                     child: Column(
@@ -84,6 +93,10 @@ class _AuthorizationtListState extends State<Authorization> {
                           decoration: InputDecoration(
                             labelText: 'Логин',
                           ),
+                          validationMessages: (control) => {
+                            'required': 'Не оставляйте поле пустым!',
+                            'email': 'Некорректный формат email'
+                          },
                         ),
                         ReactiveTextField(
                           formControlName: 'password',
@@ -92,48 +105,30 @@ class _AuthorizationtListState extends State<Authorization> {
                           decoration: InputDecoration(
                             labelText: 'Код подтверждения',
                           ),
+                          validationMessages: (control) => {
+                            'required': 'Не оставляйте поле пустым!',
+                          },
                         ),
                       ],
                     ),
                   ),
-                  // TextField(
-                  //   controller: loginController,
-                  //   style: TextStyle(
-                  //     fontSize: 16,
-                  //     color: Colors.black,
-                  //   ),
-                  //   decoration: InputDecoration(
-                  //     labelText: "Логин",
-                  //   ),
-                  // ),
-                  // SizedBox(
-                  //   height: 8,
-                  // ),
-                  // TextField(
-                  //   controller: passwordController,
-                  //   obscureText: true,
-                  //   obscuringCharacter: '*',
-                  //   style: TextStyle(
-                  //     fontSize: 16,
-                  //     color: Colors.black,
-                  //   ),
-                  //   decoration: InputDecoration(
-                  //     labelText: "Код подтверждения",
-                  //   ),
-                  // ),
                   SizedBox(
                     height: 24,
                   ),
-                  Text(
-                    'Забыли пароль?',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Color(0XFF909090),
+                  TextButton(
+                    onPressed: () {},
+                    style: Theme.of(context).textButtonTheme.style!.copyWith(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.transparent),
+                        ),
+                    child: Text(
+                      'Забыли пароль?',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0XFF909090),
+                      ),
                     ),
                   ),
-                  // SizedBox(
-                  //   height: 183,
-                  // ),
                 ],
               ),
               Spacer(
@@ -146,27 +141,39 @@ class _AuthorizationtListState extends State<Authorization> {
                     Row(
                       children: [
                         Expanded(
-                          child: TextButton(
-                            onPressed: state.formIsSent
-                                ? null
-                                : () {
-                                    String login = loginController.text;
-                                    String password = passwordController.text;
-                                    context.read<AuthorizationBloc>().add(
-                                        LoginStarted(logAndPas: form.controls));
-                                  },
-                            child: AnimatedSwitcher(
-                              duration: Duration(milliseconds: 300),
-                              child: state.formIsSent
-                                  ? CircularProgressIndicator(
-                                      color: Colors.white,
-                                    )
-                                  : Text(
-                                      'Войти',
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 16),
-                                    ),
-                            ),
+                          child: ReactiveForm(
+                            formGroup: this.form,
+                            child: ReactiveFormConsumer(
+                                builder: (context, form, child) {
+                              return TextButton(
+                                onPressed: form.valid == true
+                                    ? state.formIsSent
+                                        ? null
+                                        : () {
+                                            String login = loginController.text;
+                                            String password =
+                                                passwordController.text;
+                                            context
+                                                .read<AuthorizationBloc>()
+                                                .add(LoginStarted(
+                                                    logAndPas: form.value));
+                                          }
+                                    : null,
+                                child: AnimatedSwitcher(
+                                  duration: Duration(milliseconds: 300),
+                                  child: state.formIsSent
+                                      ? CircularProgressIndicator(
+                                          color: Colors.white,
+                                        )
+                                      : Text(
+                                          'Войти',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16),
+                                        ),
+                                ),
+                              );
+                            }),
                           ),
                         ),
                       ],
@@ -174,8 +181,12 @@ class _AuthorizationtListState extends State<Authorization> {
                     SizedBox(
                       height: 20,
                     ),
-                    InkWell(
-                      onTap: () {
+                    TextButton(
+                      style: Theme.of(context).textButtonTheme.style!.copyWith(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                          ),
+                      onPressed: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(

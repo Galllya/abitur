@@ -10,6 +10,8 @@ abstract class INewsRepository {
 
   Future<Pagination<NewsArticle>> loadNews(int page, int size);
   Future<NewsArticle> loadOneNews(int id);
+  Future<void> addToFavourites(int id);
+  Future<void> deleteToFavourites(int id);
 }
 
 class NewsRepository extends INewsRepository {
@@ -23,5 +25,15 @@ class NewsRepository extends INewsRepository {
   @override
   Future<NewsArticle> loadOneNews(int id) {
     return newsProvider.loadOneNews(id: id);
+  }
+
+  @override
+  Future<void> addToFavourites(int id) {
+    return newsProvider.addToFavourites(id: id);
+  }
+
+  @override
+  Future<void> deleteToFavourites(int id) {
+    return newsProvider.deleteToFavourites(id: id);
   }
 }

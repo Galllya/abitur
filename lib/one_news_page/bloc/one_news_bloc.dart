@@ -18,7 +18,11 @@ class OneNewsBloc extends Bloc<OneNewsEvent, OneNewsState> {
     OneNewsEvent event,
   ) async* {
     if (event is OneNewsLoaded) {
-      yield* _mapOneNewsSLoadedToState(event);
+      if (event is ChangedFavorites) {
+        yield* _mapChangedFavoritesToState();
+      } else {
+        yield* _mapOneNewsSLoadedToState(event);
+      }
     }
   }
 
@@ -36,5 +40,9 @@ class OneNewsBloc extends Bloc<OneNewsEvent, OneNewsState> {
       isLoading: false,
       oneEvent: news,
     );
+  }
+
+  Stream<OneNewsState> _mapChangedFavoritesToState() async* {
+    newsRepository.addToFavourites(state.oneNews!.id);
   }
 }
