@@ -15,9 +15,14 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
-    final account = context.read<AccountBloc>().state.accountData;
-    return BlocBuilder<ProfileBloc, ProfileState>(
-        builder: (BuildContext context, ProfileState state) {
+    /// В этом месте не надо обращаться напрямую к состоянию блока, для использования состояния есть
+    /// параметр в функции отрисовки - state, оно будет динамически изменяться при получении новых состояний
+    // final account = context.read<AccountBloc>().state.accountData;
+    /// И тут у тебя нет пока что завязки на ProfileBloc,так что можно испольовать напрямую AccountBloc
+    return BlocBuilder<AccountBloc, AccountState>(
+        builder: (BuildContext context, AccountState state) {
+      /// Для удобства можно так доставать значения из полей состояния
+      final account = state.accountData;
       return Padding(
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: ListView(

@@ -63,6 +63,9 @@ class _OneNewsListState extends State<OneNews> {
                             TextStyle(fontSize: 16, color: Color(0XFF909090)),
                       ),
                     ),
+
+                    /// так как добавление в избранное - функционал авторизованного пользователя, надо скрывать кнопку, если пользователь не авторизован
+                    /// или можно показать модалку с предложением авторизоваться
                     state.oneNews!.isFavorite
                         ? IconButton(
                             icon: const Icon(Icons.favorite),
@@ -84,6 +87,8 @@ class _OneNewsListState extends State<OneNews> {
                     ),
                     if ((state.oneNews != null) &&
                         (state.oneNews!.text!.isNotEmpty))
+
+                      /// тут можно без интерполяции передавать текст напрямую
                       Html(
                         data: """${state.oneNews!.text}""",
                       )

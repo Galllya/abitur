@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 class SectionHeader extends StatelessWidget {
   final String title;
   final String buttonText;
+  // final VoidCallback onButtonTap;
   const SectionHeader({
     Key? key,
     required this.buttonText,
     required this.title,
+    // required this.onButtonTap,
   }) : super(key: key);
 
   @override
@@ -28,7 +30,12 @@ class SectionHeader extends StatelessWidget {
               ),
             ),
           ),
+
+          /// Тут я не заметил раньше, но лучше выносить обработчик onTap в аргументы виджета,
+          /// чтобы не было таких условий(например, если мы добавим еще третий раздел и так далее) и было что-то вроде
+          /// как я указал в комментариях тут и выше
           InkWell(
+            /// onTap: onButtonTap,
             onTap: () {
               title == 'Новости'
                   ? Navigator.push(context,
