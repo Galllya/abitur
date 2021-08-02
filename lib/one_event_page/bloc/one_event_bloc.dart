@@ -17,23 +17,30 @@ class OneEventBloc extends Bloc<OneEventEvent, OneEventState> {
     OneEventEvent event,
   ) async* {
     if (event is OneEventLoaded) {
-      yield* _mapOneEventSLoadedToState(event);
-    }
+      yield* _mapOneEventSLoadedToState(event.id);
+    } else if (event is ChangedFavorites) yield* _mapChangedFavoritesToState();
   }
 
-  Stream<OneEventState> _mapOneEventSLoadedToState(OneEventLoaded ev) async* {
+  Stream<OneEventState> _mapOneEventSLoadedToState(int id) async* {
     yield state.copyWith(
       isLoading: true,
     );
 
-    EventArticle? event;
     try {
-      event = await eventRepository.loadOneEvent(ev.id);
-    } catch (e) {}
+      final newsArticle = await eventRepository.loadOneEvent(id);
+      yield state.copyWith(isLoading: false, oneEvent: newsArticle);
+    } catch (e) {
+      yield state.copyWith(isLoading: false);
+    }
+  }
 
-    yield state.copyWith(
-      isLoading: false,
-      oneEvent: event,
-    );
+  Stream<OneEventState> _mapChangedFavoritesToState() async* {
+    if (state.oneEvent!.isFavorite == true) {
+      await eventRepository.deleteEventToFavourites(state.oneEvent!.id);
+    } else {
+      await eventRepository.addEventToFavourites(state.oneEvent!.id);
+    }
+
+    yield* _mapOneEventSLoadedToState(state.oneEvent!.id);
   }
 }

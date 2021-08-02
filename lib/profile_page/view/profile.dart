@@ -1,5 +1,4 @@
 import 'package:abitur/common/bloc/account_bloc/account_bloc.dart';
-import 'package:abitur/profile_page/bloc/profile_bloc.dart';
 import 'package:abitur/profile_page/view/widgets/separator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,72 +18,67 @@ class _ProfileState extends State<Profile> {
     /// параметр в функции отрисовки - state, оно будет динамически изменяться при получении новых состояний
     // final account = context.read<AccountBloc>().state.accountData;
     /// И тут у тебя нет пока что завязки на ProfileBloc,так что можно испольовать напрямую AccountBloc
-    return BlocBuilder<AccountBloc, AccountState>(
-        builder: (BuildContext context, AccountState state) {
-      /// Для удобства можно так доставать значения из полей состояния
-      final account = state.accountData;
-      return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        child: ListView(
-          children: [
-            SizedBox(
-              height: 20,
-            ),
+    final account = context.read<AccountBloc>().state.accountData;
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: ListView(
+        children: [
+          SizedBox(
+            height: 20,
+          ),
+          Text(
+            account!.firstName,
+            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+          ),
+          Text(
+            account.lastName,
+            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+          ),
+          if (account.surName != null)
             Text(
-              account!.firstName,
+              account.surName.toString(),
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
-            Text(
-              account.lastName,
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-            ),
-            if (account.surName != null)
-              Text(
-                account.surName.toString(),
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-              ),
-            SizedBox(
-              height: 10,
-            ),
+          SizedBox(
+            height: 10,
+          ),
+          Separator(
+            label: 'Email',
+            value: account.email,
+          ),
+          Separator(
+            label: 'Номер телефона',
+            value: account.phoneNumber,
+          ),
+          if (account.birthday != null)
             Separator(
-              littleText: 'Email',
-              bigText: account.email,
+              label: 'День рождения',
+              value: DateFormat.yMd('ru_RU').format(account.birthday),
             ),
+          if (account.country != null)
             Separator(
-              littleText: 'Номер телефона',
-              bigText: account.phoneNumber,
+              label: ' Страна',
+              value: account.country.toString(),
             ),
-            if (account.birthday != null)
-              Separator(
-                littleText: 'День рождения',
-                bigText: DateFormat.yMd('ru_RU').format(account.birthday),
-              ),
-            if (account.country != null)
-              Separator(
-                littleText: ' Страна',
-                bigText: account.country.toString(),
-              ),
-            if (account.region != null)
-              Separator(
-                littleText: 'Регион',
-                bigText: account.region.toString(),
-              ),
+          if (account.region != null)
             Separator(
-              littleText: 'Город',
-              bigText: account.city,
+              label: 'Регион',
+              value: account.region.toString(),
             ),
-            Separator(
-              littleText: 'Баллы ЕГЭ',
-              bigText: account.egePoints.toString(),
-            ),
-            Separator(
-              littleText: 'Баллы в приложении',
-              bigText: account.points.toString(),
-            ),
-          ],
-        ),
-      );
-    });
-    ;
+          Separator(
+            label: 'Город',
+            value: account.city,
+          ),
+          Separator(
+            label: 'Баллы ЕГЭ',
+            value: account.egePoints.toString(),
+          ),
+          Separator(
+            label: 'Баллы в приложении',
+            value: account.points.toString(),
+          ),
+        ],
+      ),
+    );
   }
 }

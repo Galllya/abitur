@@ -1,3 +1,4 @@
+import 'package:abitur/common/bloc/account_bloc/account_bloc.dart';
 import 'package:abitur/one_news_page/bloc/one_news_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,6 +20,8 @@ class _OneNewsListState extends State<OneNews> {
 
   @override
   Widget build(BuildContext context) {
+    final account = context.read<AccountBloc>().state;
+
     return BlocBuilder<OneNewsBloc, OneNewsState>(
         builder: (BuildContext context, OneNewsState state) {
       if (state.isLoading)
@@ -50,6 +53,23 @@ class _OneNewsListState extends State<OneNews> {
                     ),
                   ],
                 ),
+              SizedBox(
+                height: 10,
+              ),
+              if (account.isLoading)
+                state.oneNews!.isFavorite
+                    ? IconButton(
+                        icon: const Icon(Icons.favorite),
+                        onPressed: () {
+                          context.read<OneNewsBloc>()..add(ChangedFavorites());
+                        },
+                      )
+                    : IconButton(
+                        icon: const Icon(Icons.favorite_border),
+                        onPressed: () {
+                          context.read<OneNewsBloc>()..add(ChangedFavorites());
+                        },
+                      ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
@@ -66,18 +86,7 @@ class _OneNewsListState extends State<OneNews> {
 
                     /// так как добавление в избранное - функционал авторизованного пользователя, надо скрывать кнопку, если пользователь не авторизован
                     /// или можно показать модалку с предложением авторизоваться
-                    state.oneNews!.isFavorite
-                        ? IconButton(
-                            icon: const Icon(Icons.favorite),
-                            onPressed: () {
-                              context.read<OneNewsBloc>()
-                                ..add(ChangedFavorites());
-                            },
-                          )
-                        : IconButton(
-                            icon: const Icon(Icons.favorite_border),
-                            onPressed: () {},
-                          ),
+
                     Text(
                       state.oneNews!.title,
                       style: TextStyle(

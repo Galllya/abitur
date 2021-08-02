@@ -1,4 +1,3 @@
-import 'package:abitur/style/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -7,11 +6,11 @@ class Separator extends StatelessWidget {
   /// Верхний текст - это подпись(иначе label) для основного текста, который является "значением" выводимого поля,
   ///  т.е. образуется связка "подпись для значения" - "label - value",
   /// littleText - label
-  final String littleText;
+  final String label;
 
   /// bigText - value
-  final String bigText;
-  const Separator({Key? key, required this.littleText, required this.bigText})
+  final String value;
+  const Separator({Key? key, required this.label, required this.value})
       : super(key: key);
 
   @override
@@ -20,14 +19,14 @@ class Separator extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          littleText,
+          label,
           style: TextStyle(
             fontSize: 14,
             color: Color(0XFF909090),
           ),
         ),
         Text(
-          bigText,
+          value,
           style: TextStyle(fontSize: 20),
         ),
         SizedBox(

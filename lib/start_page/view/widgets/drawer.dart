@@ -1,5 +1,6 @@
 import 'package:abitur/authorization_page/view/authorization_page.dart';
 import 'package:abitur/common/bloc/account_bloc/account_bloc.dart';
+import 'package:abitur/favorites_page/view/favorites_page.dart';
 import 'package:abitur/profile_page/view/profile_page.dart';
 import 'package:abitur/style/theme.dart';
 import 'package:flutter/cupertino.dart';
@@ -82,25 +83,36 @@ class Draver extends StatelessWidget {
             }
           }),
           ListTile(
-              title: new Text("Главная"),
+              title: Text("Главная"),
               leading: Icon(Icons.home),
               onTap: () {
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => StartPage()));
               }),
           BlocBuilder<AccountBloc, AccountState>(
-              builder: (BuildContext context, AccountState state) {
-            if (state.isLoading)
-              return ListTile(
-                  title: new Text("Профиль"),
-                  leading: Icon(Icons.home),
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ProfilePage()));
-                  });
-            else
-              return SizedBox();
-          }),
+            builder: (BuildContext context, AccountState state) {
+              if (state.isLoading)
+                return ListTile(
+                    title: new Text("Профиль"),
+                    leading: Icon(Icons.home),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProfilePage()));
+                    });
+              else
+                return SizedBox();
+            },
+          ),
+          ListTile(
+            title: Text("Избранное"),
+            leading: Icon(Icons.favorite),
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => FavoritesPage()));
+            },
+          )
         ],
       ),
     );

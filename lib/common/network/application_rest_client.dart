@@ -1,5 +1,6 @@
 import 'package:abitur/domain/account.dart';
 import 'package:abitur/domain/event.dart';
+import 'package:abitur/domain/favorites.dart';
 import 'package:abitur/domain/news.dart';
 import 'package:abitur/domain/pagination.dart';
 import 'package:abitur/domain/token.dart';
@@ -62,5 +63,21 @@ abstract class ApplicationRestClient {
   @DELETE('/$kNews/{id}/Favorite')
   Future<void> deleteToFavourites({
     @Path('id') required int id,
+  });
+
+  @POST('/$kEvents/{id}/Favorite')
+  Future<void> addEventToFavourites({
+    @Path('id') required int id,
+  });
+
+  @DELETE('/$kEvents/{id}/Favorite')
+  Future<void> deleteEventToFavourites({
+    @Path('id') required int id,
+  });
+  static const String kFavotites = " Favorites";
+  @GET('/$kFavotites/')
+  Future<Pagination<FavoritesDate>> loadFavorites({
+    @Query('page') required int page,
+    @Query('size') int? size = _kPageSize,
   });
 }

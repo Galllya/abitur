@@ -1,3 +1,4 @@
+import 'package:abitur/common/bloc/account_bloc/account_bloc.dart';
 import 'package:abitur/one_event_page/bloc/one_event_bloc.dart';
 import 'package:abitur/style/theme.dart';
 import 'package:flutter/material.dart';
@@ -21,124 +22,145 @@ class _OneEventListState extends State<OneEvent> {
 
   @override
   Widget build(BuildContext context) {
+    final account = context.read<AccountBloc>().state;
+
     return BlocBuilder<OneEventBloc, OneEventState>(
         builder: (BuildContext context, OneEventState state) {
-          if (state.isLoading )
-            return  Center(
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [CircularProgressIndicator()]),
-            );
-          else {
-            if(state.oneEvent!=null)
-              return ListView(
-                children: <Widget>[
-                  if (state.oneEvent!.picture != null)
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Image.network('${state.oneEvent!.picture}',
-                              errorBuilder: (context, error, stackTrace) {
-                                return SizedBox();
-                              }, loadingBuilder: (BuildContext context, Widget child,
-                                  ImageChunkEvent? loadingProgress) {
-                                if (loadingProgress == null) {
-                                  return child;
-                                }
-                                return Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: [CircularProgressIndicator()]);
-                              }),
-                        ),
-                      ],
+      if (state.isLoading)
+        return Center(
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [CircularProgressIndicator()]),
+        );
+      else {
+        if (state.oneEvent != null)
+          return ListView(
+            children: <Widget>[
+              if (state.oneEvent!.picture != null)
+                Row(
+                  children: [
+                    Expanded(
+                      child: Image.network('${state.oneEvent!.picture}',
+                          errorBuilder: (context, error, stackTrace) {
+                        return SizedBox();
+                      }, loadingBuilder: (BuildContext context, Widget child,
+                              ImageChunkEvent? loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        }
+                        return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [CircularProgressIndicator()]);
+                      }),
                     ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(top: 24, bottom: 16),
-                          child: Text(
-                            DateFormat.yMd('ru_RU')
-                                .format(state.oneEvent!.dateFrom!) +
-                                ' - ' +
-                                DateFormat.yMd('ru_RU')
-                                    .format(state.oneEvent!.dateTo!),
-                            style: TextStyle(fontSize: 16, color: Color(0XFF909090)),
-                          ),
-                        ),
-                          DecoratedBox(
-                            decoration: BoxDecoration(
-                                color: primaryTheme.primaryColor,
-                                borderRadius: BorderRadius.circular(8)),
-                            child: Padding(
-                              padding:
-                              EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Награда за участие',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  SizedBox(
-                                    height: 8,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        state.oneEvent!.points.toString(),
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      ),
-                                      SizedBox(
-                                        width: 8,
-                                      ),
-                                      SvgPicture.asset(
-                                        'assets/icons/icon_gift.svg',
-                                        height: 20,
-                                        width: 20,
-                                        color: Colors.white,
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        Text(
-                          state.oneEvent!.title,
-                          style: TextStyle(
-                              fontSize: 32,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        if ((state.oneEvent != null) && (state.oneEvent!.text!.isNotEmpty))
-                          Html(
-                            data: """${state.oneEvent!.text}""",
-                          )
-                        else
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [CircularProgressIndicator()]),
-                      ],
-                    ),
-                  ),
-                ],
-              );
-            else
-              return Center(
-                child: Text(
-                  'Ошибка при загрузке события',
-                  style: TextStyle(fontSize: 16, color: Colors.black),
+                  ],
                 ),
-              );
-          }
-        });
+              SizedBox(
+                height: 10,
+              ),
+              if (account.isLoading)
+                state.oneEvent!.isFavorite == true
+                    ? IconButton(
+                        icon: const Icon(Icons.favorite),
+                        onPressed: () {
+                          context.read<OneEventBloc>()..add(ChangedFavorites());
+                        },
+                      )
+                    : IconButton(
+                        icon: const Icon(Icons.favorite_border),
+                        onPressed: () {
+                          context.read<OneEventBloc>()..add(ChangedFavorites());
+                        },
+                      ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(top: 24, bottom: 16),
+                      child: Text(
+                        DateFormat.yMd('ru_RU')
+                                .format(state.oneEvent!.dateFrom!) +
+                            ' - ' +
+                            DateFormat.yMd('ru_RU')
+                                .format(state.oneEvent!.dateTo!),
+                        style:
+                            TextStyle(fontSize: 16, color: Color(0XFF909090)),
+                      ),
+                    ),
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                          color: primaryTheme.primaryColor,
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Padding(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Награда за участие',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  state.oneEvent!.points.toString(),
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                SvgPicture.asset(
+                                  'assets/icons/icon_gift.svg',
+                                  height: 20,
+                                  width: 20,
+                                  color: Colors.white,
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    Text(
+                      state.oneEvent!.title,
+                      style: TextStyle(
+                          fontSize: 32,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    if ((state.oneEvent != null) &&
+                        (state.oneEvent!.text!.isNotEmpty))
+                      Html(
+                        data: """${state.oneEvent!.text}""",
+                      )
+                    else
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [CircularProgressIndicator()]),
+                  ],
+                ),
+              ),
+            ],
+          );
+        else
+          return Center(
+            child: Text(
+              'Ошибка при загрузке события',
+              style: TextStyle(fontSize: 16, color: Colors.black),
+            ),
+          );
+      }
+    });
   }
 }

@@ -1,16 +1,15 @@
-import 'package:abitur/event_page/view/event_page.dart';
-import 'package:abitur/news_page/view/news_page.dart';
+
 import 'package:flutter/material.dart';
 
 class SectionHeader extends StatelessWidget {
   final String title;
   final String buttonText;
-  // final VoidCallback onButtonTap;
+  final VoidCallback onButtonTap;
   const SectionHeader({
     Key? key,
     required this.buttonText,
     required this.title,
-    // required this.onButtonTap,
+    required this.onButtonTap,
   }) : super(key: key);
 
   @override
@@ -35,13 +34,8 @@ class SectionHeader extends StatelessWidget {
           /// чтобы не было таких условий(например, если мы добавим еще третий раздел и так далее) и было что-то вроде
           /// как я указал в комментариях тут и выше
           InkWell(
-            /// onTap: onButtonTap,
             onTap: () {
-              title == 'Новости'
-                  ? Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => NewsPage()))
-                  : Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => EventPage()));
+              onButtonTap();
             },
             child: Text(
               buttonText,

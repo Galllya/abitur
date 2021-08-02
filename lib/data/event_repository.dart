@@ -9,6 +9,8 @@ abstract class IEventRepository {
 
   Future<Pagination<EventArticle>> loadEvents(int page, int size);
   Future<EventArticle> loadOneEvent(int id);
+  Future<void> addEventToFavourites(int id);
+  Future<void> deleteEventToFavourites(int id);
 }
 
 class EventRepository extends IEventRepository {
@@ -22,5 +24,15 @@ class EventRepository extends IEventRepository {
   @override
   Future<EventArticle> loadOneEvent(int id) {
     return eventProvider.loadOneEvents(id: id);
+  }
+
+  @override
+  Future<void> addEventToFavourites(int id) {
+    return eventProvider.addEventToFavourites(id: id);
+  }
+
+  @override
+  Future<void> deleteEventToFavourites(int id) {
+    return eventProvider.deleteEventToFavourites(id: id);
   }
 }
