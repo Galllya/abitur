@@ -1,3 +1,4 @@
+import 'package:abitur/common/bloc/favorite_bloc/favorites_bloc.dart';
 import 'package:abitur/common/network/application_rest_client.dart';
 import 'package:abitur/common/network/interceptors/token_interceptor.dart';
 import 'package:abitur/data/account_provider.dart';
@@ -41,8 +42,17 @@ void main() async {
   final newsRepo = NewsRepository(newsProvider);
   final eventRepo = EventRepository(eventProvider);
   runApp(
-    BlocProvider(
-      create: (context) => AccountBloc(sharedPreferences, accountRepo),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<FavoritesBloc>(
+          create: (BuildContext context) =>
+              FavoritesBloc(favoritesRepository: favoritesRepo),
+        ),
+        BlocProvider<AccountBloc>(
+          create: (BuildContext context) =>
+              AccountBloc(sharedPreferences, accountRepo),
+        ),
+      ],
       child: MultiProvider(providers: [
         Provider<EventRepository>.value(value: eventRepo),
         Provider<NewsRepository>.value(value: newsRepo),

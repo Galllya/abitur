@@ -7,7 +7,7 @@ abstract class IFavoritesRepository {
 
   IFavoritesRepository(this.favoritesProvider);
 
-  Future<Pagination<FavoritesDate>> loadFavorites(int page, int size);
+  Future<Pagination<FavoritesDate>> loadFavorites(/*int page, int size*/);
 }
 
 class FavoritesRepository extends IFavoritesRepository {
@@ -15,7 +15,7 @@ class FavoritesRepository extends IFavoritesRepository {
       : super(favoritesProvider);
 
   @override
-  Future<Pagination<FavoritesDate>> loadFavorites(int page, int size) {
-    return favoritesProvider.loadFavorites(page: page, size: size);
+  Future<Pagination<FavoritesDate>> loadFavorites(/*int page, int size*/) {
+    return favoritesProvider.loadFavorites(/*page: page, size: size*/);
   }
 }

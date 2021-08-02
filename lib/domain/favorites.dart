@@ -7,15 +7,17 @@ part 'favorites.g.dart';
 class FavoritesDate {
   final int id;
   final String title;
-  final DateTime dateFrom;
-  final DateTime dateTo;
-  final String timeFrom;
-  final String timeTo;
-  final int points;
-  final int costPoints;
-  final int costRubles;
-  final String category;
-  final String picture;
+  final DateTime? dateFrom;
+  final DateTime? dateTo;
+  final String? timeFrom;
+  final String? timeTo;
+  final int? points;
+  final int? costPoints;
+  final int? costRubles;
+  final String? category;
+  final String? picture;
+  final bool? isCourse;
+  final String type;
 
   FavoritesDate(
       {required this.id,
@@ -28,7 +30,9 @@ class FavoritesDate {
       required this.timeFrom,
       required this.category,
       required this.costPoints,
-      required this.costRubles});
+      required this.costRubles,
+      this.isCourse,
+      required this.type});
 
   factory FavoritesDate.fromJson(Map<String, dynamic> json) =>
       _$FavoritesDateFromJson(json);

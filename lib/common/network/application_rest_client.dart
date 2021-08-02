@@ -74,10 +74,13 @@ abstract class ApplicationRestClient {
   Future<void> deleteEventToFavourites({
     @Path('id') required int id,
   });
-  static const String kFavotites = " Favorites";
-  @GET('/$kFavotites/')
-  Future<Pagination<FavoritesDate>> loadFavorites({
-    @Query('page') required int page,
-    @Query('size') int? size = _kPageSize,
-  });
+
+  static const String kFavorites = "Favorites";
+  @GET('/$kFavorites/')
+  Future<Pagination<FavoritesDate>> loadFavorites(
+      //     {
+      //   @Query('page') required int page,
+      //   @Query('size') int? size = _kPageSize,
+      // }
+      );
 }

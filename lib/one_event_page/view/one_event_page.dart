@@ -1,3 +1,4 @@
+import 'package:abitur/common/bloc/favorite_bloc/favorites_bloc.dart';
 import 'package:abitur/data/event_repository.dart';
 import 'package:abitur/one_event_page/bloc/one_event_bloc.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class _OneEventListPageState extends State<OneEventPage> {
   void initState() {
     super.initState();
     oneEventBloc = OneEventBloc(
+      favoritesBloc: context.read<FavoritesBloc>(),
       eventRepository: context.read<EventRepository>(),
     )..add(OneEventLoaded(id: widget._id));
   }

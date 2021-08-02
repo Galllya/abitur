@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:abitur/common/bloc/favorite_bloc/favorites_bloc.dart';
 import 'package:abitur/data/event_repository.dart';
 import 'package:abitur/domain/event.dart';
 import 'package:bloc/bloc.dart';
@@ -10,7 +11,10 @@ part 'one_event_state.dart';
 
 class OneEventBloc extends Bloc<OneEventEvent, OneEventState> {
   final IEventRepository eventRepository;
-  OneEventBloc({required this.eventRepository}) : super(OneEventState());
+  final FavoritesBloc favoritesBloc;
+
+  OneEventBloc({required this.favoritesBloc, required this.eventRepository})
+      : super(OneEventState());
 
   @override
   Stream<OneEventState> mapEventToState(
@@ -40,6 +44,7 @@ class OneEventBloc extends Bloc<OneEventEvent, OneEventState> {
     } else {
       await eventRepository.addEventToFavourites(state.oneEvent!.id);
     }
+    favoritesBloc.add(FavoritesLoaded());
 
     yield* _mapOneEventSLoadedToState(state.oneEvent!.id);
   }

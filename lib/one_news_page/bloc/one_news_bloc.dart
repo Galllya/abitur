@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:abitur/common/bloc/favorite_bloc/favorites_bloc.dart';
 import 'package:abitur/data/news_repository.dart';
 import 'package:abitur/domain/news.dart';
 import 'package:bloc/bloc.dart';
@@ -10,8 +11,10 @@ part 'one_news_state.dart';
 
 class OneNewsBloc extends Bloc<OneNewsEvent, OneNewsState> {
   final INewsRepository newsRepository;
+  final FavoritesBloc favoritesBloc;
 
-  OneNewsBloc({required this.newsRepository}) : super(OneNewsState());
+  OneNewsBloc({required this.favoritesBloc, required this.newsRepository})
+      : super(OneNewsState());
 
   @override
   Stream<OneNewsState> mapEventToState(
@@ -52,6 +55,8 @@ class OneNewsBloc extends Bloc<OneNewsEvent, OneNewsState> {
 
       await newsRepository.addToFavourites(state.oneNews!.id);
     }
+
+    favoritesBloc.add(FavoritesLoaded());
 
     yield* _mapOneNewsSLoadedToState(state.oneNews!.id);
 

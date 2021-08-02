@@ -8,7 +8,7 @@ class FavoritesProvider extends RestClientProvider {
       : super(applicationRestClient);
 
   Future<Pagination<FavoritesDate>> loadFavorites(
-      {required int page, int? size}) async {
-    return applicationRestClient.loadFavorites(page: page, size: size);
+      /*{required int page, int? size}*/) async {
+    return applicationRestClient.loadFavorites(/*page: page, size: size*/);
   }
 }

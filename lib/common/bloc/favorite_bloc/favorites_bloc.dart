@@ -25,7 +25,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
   Stream<FavoritesState> _mapFavoritesLoadedToState() async* {
     yield state.copyWith(loading: true);
     try {
-      final favorites = await favoritesRepository.loadFavorites(1, 5);
+      final favorites = await favoritesRepository.loadFavorites();
 
       yield state.copyWith(
         favorites: favorites.elements,

@@ -1,3 +1,5 @@
+import 'package:abitur/common/bloc/favorite_bloc/favorites_bloc.dart';
+import 'package:abitur/data/favotites_repository.dart';
 import 'package:abitur/data/news_repository.dart';
 import 'package:abitur/one_news_page/bloc/one_news_bloc.dart';
 import 'package:abitur/one_news_page/view/one_news.dart';
@@ -19,6 +21,7 @@ class _OneNewsListPageState extends State<OneNewsPage> {
   void initState() {
     super.initState();
     oneNewsBloc = OneNewsBloc(
+      favoritesBloc: context.read<FavoritesBloc>(),
       newsRepository: context.read<NewsRepository>(),
     )..add(OneNewsLoaded(id: widget._id));
   }

@@ -184,16 +184,14 @@ class _ApplicationRestClient implements ApplicationRestClient {
   }
 
   @override
-  Future<Pagination<FavoritesDate>> loadFavorites(
-      {required page, size = _kPageSize}) async {
+  Future<Pagination<FavoritesDate>> loadFavorites() async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'page': page, r'size': size};
-    queryParameters.removeWhere((k, v) => v == null);
+    final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Pagination<FavoritesDate>>(
             Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
-                .compose(_dio.options, '/ Favorites/',
+                .compose(_dio.options, '/Favorites/',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Pagination<FavoritesDate>.fromJson(
