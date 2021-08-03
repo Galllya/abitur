@@ -1,5 +1,5 @@
 import 'package:abitur/common/bloc/favorite_bloc/favorites_bloc.dart';
-import 'package:abitur/favorites_page/view/widgets/favorites_card.dart';
+import 'package:abitur/favorites_page/widgets/favorites_card.dart';
 import 'package:abitur/one_event_page/view/one_event_page.dart';
 import 'package:abitur/one_news_page/view/one_news_page.dart';
 import 'package:flutter/material.dart';
@@ -35,22 +35,22 @@ class _FavoritesState extends State<Favorites> {
             controller: scrollController,
             children: [
               ...state.favorites.map(
-                (FavoritesDate) => Padding(
+                (favoritesDate) => Padding(
                   padding: EdgeInsets.only(bottom: 16),
                   child: FavoritesCard(
-                    favoritesDate: FavoritesDate,
+                    favoritesDate: favoritesDate,
                     onButtonTap: () {
-                      FavoritesDate.type == "News"
+                      favoritesDate.type == "News"
                           ? Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      OneNewsPage(id: FavoritesDate.id)))
+                                      OneNewsPage(id: favoritesDate.id)))
                           : Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      OneEventPage(id: FavoritesDate.id)));
+                                      OneEventPage(id: favoritesDate.id)));
                     },
                   ),
                 ),

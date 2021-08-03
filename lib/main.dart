@@ -8,6 +8,8 @@ import 'package:abitur/data/favotites_provider.dart';
 import 'package:abitur/data/favotites_repository.dart';
 import 'package:abitur/data/news_provider.dart';
 import 'package:abitur/data/news_repository.dart';
+import 'package:abitur/data/subjects_provider.dart';
+import 'package:abitur/data/subjects_repository.dart';
 import 'package:abitur/initialization_page/view/initialization_page.dart';
 import 'package:abitur/style/theme.dart';
 import 'package:dio/dio.dart';
@@ -33,10 +35,12 @@ void main() async {
   dio.interceptors.add(TokenInterceptor(sharedPreferences, dio));
 
   final applicationRestClient = ApplicationRestClient(dio);
+  final subjectsProvider = SubjectsProvider(applicationRestClient);
   final favoritesProvider = FavoritesProvider(applicationRestClient);
   final accountProvider = AccountProvider(applicationRestClient);
   final newsProvider = NewsProvider(applicationRestClient);
   final eventProvider = EventProvider(applicationRestClient);
+  final subjectsRepo = SubjectsRepository(subjectsProvider);
   final favoritesRepo = FavoritesRepository(favoritesProvider);
   final accountRepo = AccountRepository(accountProvider, sharedPreferences);
   final newsRepo = NewsRepository(newsProvider);
@@ -59,6 +63,7 @@ void main() async {
         Provider<AccountRepository>.value(value: accountRepo),
         Provider<SharedPreferences>.value(value: sharedPreferences),
         Provider<FavoritesRepository>.value(value: favoritesRepo),
+        Provider<SubjectsRepository>.value(value: subjectsRepo),
       ], child: MyApp()),
     ),
   );

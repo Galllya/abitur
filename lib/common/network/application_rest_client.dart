@@ -3,6 +3,7 @@ import 'package:abitur/domain/event.dart';
 import 'package:abitur/domain/favorites.dart';
 import 'package:abitur/domain/news.dart';
 import 'package:abitur/domain/pagination.dart';
+import 'package:abitur/domain/subjects.dart';
 import 'package:abitur/domain/token.dart';
 import 'package:abitur/domain/transfer_login_and_password.dart';
 import 'package:dio/dio.dart';
@@ -77,10 +78,9 @@ abstract class ApplicationRestClient {
 
   static const String kFavorites = "Favorites";
   @GET('/$kFavorites/')
-  Future<Pagination<FavoritesDate>> loadFavorites(
-      //     {
-      //   @Query('page') required int page,
-      //   @Query('size') int? size = _kPageSize,
-      // }
-      );
+  Future<Pagination<FavoritesDate>> loadFavorites();
+
+  static const String kSubjects = 'Subjects';
+  @GET('/$kSubjects')
+  Future<List<SubjectsDate>> loadSubjects();
 }

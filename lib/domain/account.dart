@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+
 part 'account.g.dart';
 
 @JsonSerializable(
@@ -18,20 +19,22 @@ class AccountData {
   final int points;
   final int egePoints;
 
-  AccountData(
-      {required this.id,
-      required this.points,
-      required this.birthday,
-      required this.city,
-      required this.country,
-      required this.egePoints,
-      required this.email,
-      required this.firstName,
-      required this.lastName,
-      required this.phoneNumber,
-      required this.region,
-      required this.surName});
+  AccountData({
+    required this.id,
+    required this.points,
+    required this.birthday,
+    required this.city,
+    required this.country,
+    required this.egePoints,
+    required this.email,
+    required this.firstName,
+    required this.lastName,
+    required this.phoneNumber,
+    required this.region,
+    required this.surName,
+  });
 
-  factory AccountData.fromJson(Map<String, dynamic> json) =>
-      _$AccountDataFromJson(json);
+  factory AccountData.fromJson(Map<String, dynamic> json) {
+    return _$AccountDataFromJson(json);
+  }
 }
