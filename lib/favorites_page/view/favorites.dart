@@ -1,10 +1,7 @@
 import 'package:abitur/common/bloc/favorite_bloc/favorites_bloc.dart';
-import 'package:abitur/common/widgets/news_section_card.dart';
 import 'package:abitur/favorites_page/view/widgets/favorites_card.dart';
-import 'package:abitur/news_page/view/news.dart';
 import 'package:abitur/one_event_page/view/one_event_page.dart';
 import 'package:abitur/one_news_page/view/one_news_page.dart';
-import 'package:abitur/style/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,7 +22,6 @@ class _FavoritesState extends State<Favorites> {
 
   @override
   Widget build(BuildContext context) {
-    final account = context.read<FavoritesBloc>().state;
     return BlocBuilder<FavoritesBloc, FavoritesState>(
         builder: (BuildContext context, FavoritesState state) {
       if (state.loading && state.favorites.isEmpty)
