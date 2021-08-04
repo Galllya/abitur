@@ -20,5 +20,8 @@ AccountData _$AccountDataFromJson(Map<String, dynamic> json) {
     phoneNumber: json['phoneNumber'] as String,
     region: json['region'] as String?,
     surName: json['surName'] as String?,
+    subjectInAccount: (json['subjectInAccount'] as List<dynamic>)
+        .map((e) => SubjectInAccount.fromJson(e as Map<String, dynamic>))
+        .toList(),
   );
 }

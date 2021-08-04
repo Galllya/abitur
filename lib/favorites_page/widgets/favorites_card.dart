@@ -1,6 +1,4 @@
 import 'package:abitur/domain/favorites.dart';
-import 'package:abitur/domain/news.dart';
-import 'package:abitur/one_news_page/view/one_news_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';

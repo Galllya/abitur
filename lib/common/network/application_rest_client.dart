@@ -3,6 +3,7 @@ import 'package:abitur/domain/event.dart';
 import 'package:abitur/domain/favorites.dart';
 import 'package:abitur/domain/news.dart';
 import 'package:abitur/domain/pagination.dart';
+import 'package:abitur/domain/subject_in_accoint.dart';
 import 'package:abitur/domain/subjects.dart';
 import 'package:abitur/domain/token.dart';
 import 'package:abitur/domain/transfer_login_and_password.dart';
@@ -83,4 +84,9 @@ abstract class ApplicationRestClient {
   static const String kSubjects = 'Subjects';
   @GET('/$kSubjects')
   Future<List<SubjectsDate>> loadSubjects();
+
+  @PUT('/$kAccount/$kSubjects')
+  Future<void> putSubjects(
+    @Body() List<SubjectInAccount> subjectInAccount,
+  );
 }

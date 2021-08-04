@@ -1,5 +1,6 @@
 import 'package:abitur/add_EGE_points_page/bloc/add_ege_points_bloc.dart';
 import 'package:abitur/add_EGE_points_page/view/add_EGE_points.dart';
+import 'package:abitur/data/account_repository.dart';
 import 'package:abitur/data/subjects_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,9 +18,11 @@ class _AddEgepointsPageState extends State<AddEgepointsPage> {
   @override
   void initState() {
     super.initState();
-    addEgePointsBloc =
-        AddEgePointsBloc(subjectsRepository: context.read<SubjectsRepository>())
-          ..add(AddEgePointsLoaded());
+    final account = context.read<AccountRepository>();
+    addEgePointsBloc = AddEgePointsBloc(
+        accountRepository: account,
+        subjectsRepository: context.read<SubjectsRepository>())
+      ..add(AddEgePointsLoaded());
   }
 
   @override

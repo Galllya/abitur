@@ -218,6 +218,19 @@ class _ApplicationRestClient implements ApplicationRestClient {
     return value;
   }
 
+  @override
+  Future<void> putSubjects(subjectInAccount) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = subjectInAccount.map((e) => e.toJson()).toList();
+    await _dio.fetch<void>(_setStreamType<void>(
+        Options(method: 'PUT', headers: <String, dynamic>{}, extra: _extra)
+            .compose(_dio.options, '/Account/Subjects',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    return null;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

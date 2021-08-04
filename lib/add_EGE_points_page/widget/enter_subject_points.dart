@@ -1,24 +1,26 @@
-import 'package:abitur/add_EGE_points_page/bloc/add_ege_points_bloc.dart';
+import 'package:abitur/domain/subjects.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:reactive_forms/reactive_forms.dart';
 
-class EnterSubjectPoints extends StatefulWidget {
-  const EnterSubjectPoints({Key? key}) : super(key: key);
-
-  @override
-  _EnterSubjectPointsState createState() => _EnterSubjectPointsState();
-}
-
-class _EnterSubjectPointsState extends State<EnterSubjectPoints> {
-  // String dropdownValue = 'Русский язык';
+class EnterSubjectPoints extends StatelessWidget {
+  final VoidCallback delete;
+  final Function(int?) onSubjectSelect;
+  final List<SubjectsDate> subjects;
+  final FormGroup formGroup;
+  const EnterSubjectPoints(
+      {Key? key,
+      required this.subjects,
+      required this.formGroup,
+      required this.delete,
+      required this.onSubjectSelect})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AddEgePointsBloc, AddEgePointsState>(
-        builder: (BuildContext context, AddEgePointsState state) {
-      String dropdownValue = state.subjects.first.title;
-      return Column(
+    return ReactiveForm(
+      formGroup: formGroup,
+      child: Column(
         children: [
           SizedBox(
             height: 10,
@@ -27,32 +29,24 @@ class _EnterSubjectPointsState extends State<EnterSubjectPoints> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Flexible(
-                flex: 3,
-                child: DropdownButtonFormField<String>(
-                  value: dropdownValue,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                  ),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      dropdownValue = newValue!;
-                    });
-                  },
-                  items: state.subjects.map((favoritesDate) {
-                    return DropdownMenuItem<String>(
-                      value: favoritesDate.id.toString(),
-                      child: Text(favoritesDate.title),
-                    );
-                  }).toList(),
-                ),
-              ),
+                  flex: 3,
+                  child: ReactiveDropdownField(
+                    onChanged: onSubjectSelect,
+                    formControlName: 'id',
+                    items: [
+                      ...subjects.map((e) => DropdownMenuItem<int>(
+                            child: Text(e.title),
+                            value: e.id,
+                          ))
+                    ],
+                  )),
               SizedBox(
                 width: 20,
               ),
               Flexible(
                 flex: 1,
-                child: TextFormField(
+                child: ReactiveTextField(
+                    formControlName: 'value',
                     style: TextStyle(
                       fontSize: 20,
                       color: Colors.grey,
@@ -62,10 +56,15 @@ class _EnterSubjectPointsState extends State<EnterSubjectPoints> {
                       hintText: "Баллы",
                     )),
               ),
+              IconButton(
+                  onPressed: () {
+                    delete();
+                  },
+                  icon: Icon(Icons.delete))
             ],
           ),
         ],
-      );
-    });
+      ),
+    );
   }
 }

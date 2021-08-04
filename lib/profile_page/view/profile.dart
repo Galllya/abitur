@@ -1,6 +1,7 @@
 import 'package:abitur/add_EGE_points_page/view/add_EGE_points_page.dart';
 import 'package:abitur/common/bloc/account_bloc/account_bloc.dart';
 import 'package:abitur/profile_page/view/widgets/separator.dart';
+import 'package:abitur/style/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -81,6 +82,25 @@ class _ProfileState extends State<Profile> {
                 Separator(
                   label: 'Баллы в приложении',
                   value: account.points.toString(),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          color: primaryTheme.primaryColor, width: 5)),
+                  child: Column(
+                    children: [
+                      ...account.subjectInAccount.map((e) => Padding(
+                            padding: EdgeInsets.only(bottom: 16),
+                            child: Row(children: [
+                              Text(e.value.toString()),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Text(e.id.toString())
+                            ]),
+                          )),
+                    ],
+                  ),
                 ),
               ],
             ),
