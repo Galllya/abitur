@@ -1,5 +1,4 @@
 import 'package:abitur/common/widgets/news_section_card.dart';
-import 'package:abitur/domain/news.dart';
 import 'package:abitur/news_page/bloc/news_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,12 +37,6 @@ class _NewsListState extends State<News> {
   }
 
   /// проверяем на достижения нижней позиции скролла
-  bool get _isBottom {
-    if (!scrollController.hasClients) return false;
-    final maxScroll = scrollController.position.maxScrollExtent;
-    final currentScroll = scrollController.offset;
-    return currentScroll >= (maxScroll * 0.9);
-  }
 
   @override
   Widget build(BuildContext context) {

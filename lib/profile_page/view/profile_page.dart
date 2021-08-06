@@ -1,4 +1,5 @@
 import 'package:abitur/common/bloc/account_bloc/account_bloc.dart';
+import 'package:abitur/data/subjects_repository.dart';
 import 'package:abitur/profile_page/bloc/profile_bloc.dart';
 import 'package:abitur/profile_page/view/profile.dart';
 import 'package:abitur/start_page/view/start_page.dart';
@@ -17,7 +18,9 @@ class _ProfiePageState extends State<ProfilePage> {
   late ProfileBloc profileBloc;
   @override
   void initState() {
-    profileBloc = ProfileBloc();
+    profileBloc =
+        ProfileBloc(subjectsRepository: context.read<SubjectsRepository>())
+          ..add(LoadSubjects());
     super.initState();
   }
 

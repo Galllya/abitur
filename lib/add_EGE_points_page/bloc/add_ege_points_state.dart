@@ -4,12 +4,12 @@ part of 'add_ege_points_bloc.dart';
 class AddEgePointsState {
   final bool loading;
   final List<SubjectsDate> subjects;
-  final bool success;
+  final bool? success;
 
   const AddEgePointsState({
     this.loading = false,
     this.subjects = const [],
-    this.success = false,
+    this.success,
   });
 
   AddEgePointsState copyWith({

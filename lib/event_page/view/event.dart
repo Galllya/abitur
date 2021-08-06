@@ -28,13 +28,6 @@ class _EventListState extends State<Event> {
 
   void _onScroll() {}
 
-  bool get _isBottom {
-    if (!scrollController.hasClients) return false;
-    final maxScroll = scrollController.position.maxScrollExtent;
-    final currentScroll = scrollController.offset;
-    return currentScroll >= (maxScroll * 0.9);
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<EventBloc, EventState>(

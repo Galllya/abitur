@@ -25,7 +25,7 @@ class InitializationBloc
   Stream<InitializationState> _mapInitializationStateLiadingEvent() async* {
     /// тут можно не использовать await, так как плагин берет значение из закешированной Map,
     /// которая отражает текущее состояние локального хранилища
-    String? isToken = await sharedPreferences.getString('token');
+    String? isToken = sharedPreferences.getString('token');
     if (isToken != null) {
       yield state.copyWith(
         isLogged: true,

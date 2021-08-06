@@ -1,5 +1,4 @@
 import 'package:abitur/common/bloc/favorite_bloc/favorites_bloc.dart';
-import 'package:abitur/data/favotites_repository.dart';
 import 'package:abitur/favorites_page/view/favorites.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

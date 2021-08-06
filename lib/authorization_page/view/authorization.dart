@@ -150,9 +150,6 @@ class _AuthorizationtListState extends State<Authorization> {
                                     ? state.formIsSent
                                         ? null
                                         : () {
-                                            String login = loginController.text;
-                                            String password =
-                                                passwordController.text;
                                             context
                                                 .read<AuthorizationBloc>()
                                                 .add(LoginStarted(
