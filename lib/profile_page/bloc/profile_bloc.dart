@@ -11,7 +11,7 @@ part 'profile_state.dart';
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final ISubjectsRepository subjectsRepository;
 
-  ProfileBloc({required this.subjectsRepository}) : super(ProfileState());
+  ProfileBloc({required this.subjectsRepository}) : super(const ProfileState());
 
   @override
   Stream<ProfileState> mapEventToState(
@@ -24,13 +24,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     yield state.copyWith(loading: true);
     try {
       final subjects = await subjectsRepository.loadSubjects();
-
       yield state.copyWith(
         subjects: subjects,
       );
     } catch (e) {
       yield state.copyWith(loading: false);
-
       rethrow;
     }
   }

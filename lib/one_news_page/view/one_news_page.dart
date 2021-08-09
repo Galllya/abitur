@@ -7,7 +7,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OneNewsPage extends StatefulWidget {
   final int _id;
-  const OneNewsPage({Key? key, required int id}) : _id = id;
+  const OneNewsPage({Key? key, required int id})
+      : _id = id,
+        super(key: key);
 
   @override
   _OneNewsListPageState createState() => _OneNewsListPageState();
@@ -37,10 +39,10 @@ class _OneNewsListPageState extends State<OneNewsPage> {
       value: oneNewsBloc,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Новость'),
+          title: const Text('Новость'),
           centerTitle: true,
         ),
-        body: OneNews(),
+        body: const OneNews(),
       ),
     );
   }

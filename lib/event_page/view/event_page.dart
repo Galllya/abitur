@@ -34,10 +34,10 @@ class _EventListPageState extends State<EventPage> {
       value: eventBloc,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Мероприятия'),
+          title: const Text('Мероприятия'),
           centerTitle: true,
         ),
-        body: Event(),
+        body: const Event(),
       ),
     );
   }

@@ -77,7 +77,7 @@ abstract class ApplicationRestClient {
     @Path('id') required int id,
   });
 
-  static const String kFavorites = "Favorites";
+  static const String kFavorites = 'Favorites';
   @GET('/$kFavorites/')
   Future<Pagination<FavoritesDate>> loadFavorites();
 

@@ -13,7 +13,7 @@ part 'authorization_state.dart';
 class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
   final IAccountRepository accountRepository;
   AuthorizationBloc({required this.accountRepository})
-      : super(AuthorizationState());
+      : super(const AuthorizationState());
 
   @override
   Stream<AuthorizationState> mapEventToState(

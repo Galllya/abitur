@@ -4,12 +4,12 @@ class SubjectInAccount {
   const SubjectInAccount({required this.id, required this.value});
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "value": value,
+        'id': id,
+        'value': value,
       };
   factory SubjectInAccount.fromJson(Map<String, dynamic> json) =>
       SubjectInAccount(
-        id: json["id"],
-        value: json["value"],
+        id: json['id'],
+        value: json['value'],
       );
 }

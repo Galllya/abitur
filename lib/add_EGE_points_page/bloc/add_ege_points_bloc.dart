@@ -14,7 +14,7 @@ class AddEgePointsBloc extends Bloc<AddEgePointsEvent, AddEgePointsState> {
   final IAccountRepository accountRepository;
   AddEgePointsBloc(
       {required this.accountRepository, required this.subjectsRepository})
-      : super(AddEgePointsState());
+      : super(const AddEgePointsState());
 
   @override
   Stream<AddEgePointsState> mapEventToState(
@@ -22,15 +22,18 @@ class AddEgePointsBloc extends Bloc<AddEgePointsEvent, AddEgePointsState> {
   ) async* {
     if (event is AddEgePointsLoaded) {
       yield* _mapAddEgePointsLoadedToState();
-    } else {
-      if (event is PutSubjects) {
-        yield* _mapPutSubjectsToState(event);
-      }
+    }
+    if (event is PutSubjects) {
+      yield* _mapPutSubjectsToState(event);
     }
   }
 
   Stream<AddEgePointsState> _mapAddEgePointsLoadedToState() async* {
     yield state.copyWith(loading: true);
+    attemptGetSubjects();
+  }
+
+  Stream<AddEgePointsState> attemptGetSubjects() async* {
     try {
       final subjects = await subjectsRepository.loadSubjects();
 

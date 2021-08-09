@@ -19,17 +19,19 @@ class _InitializationState extends State<Initialization> {
     return BlocListener<InitializationBloc, InitializationState>(
       listener: (BuildContext context, InitializationState state) {
         if (state.isLogged!) {
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => StartPage()));
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const StartPage()));
           context.read<AccountBloc>().add(LoadingProfileData());
         } else {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => AuthorizationPage()));
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const AuthorizationPage()));
         }
       },
       child: BlocBuilder<InitializationBloc, InitializationState>(
           builder: (BuildContext context, InitializationState state) {
-        return Center(child: CircularProgressIndicator());
+        return const Center(child: CircularProgressIndicator());
       }),
     );
   }

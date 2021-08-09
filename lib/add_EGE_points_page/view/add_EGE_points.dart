@@ -40,17 +40,14 @@ class _AddEgePointsState extends State<AddEgePoints> {
 
   @override
   Widget build(BuildContext context) {
+    const snackBar = SnackBar(content: Text('Не удалось отправить даныне!'));
     return BlocListener<AddEgePointsBloc, AddEgePointsState>(
       listener: (BuildContext context, AddEgePointsState state) {
         if (state.success == true) {
           context.read<AccountBloc>().add(LoadingProfileData());
           Navigator.pop(context);
         } else if (state.success == false) {
-          Scaffold.of(context).showSnackBar(
-            SnackBar(
-              content: Text("Не удалось отправить данные"),
-            ),
-          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
       },
       child: BlocBuilder<AddEgePointsBloc, AddEgePointsState>(
@@ -59,15 +56,15 @@ class _AddEgePointsState extends State<AddEgePoints> {
             ? ReactiveForm(
                 formGroup: form,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       TextButton(
                           onPressed: addSubjectToForm,
-                          child: Text(
+                          child: const Text(
                             'Добавить предмет',
                             style: TextStyle(color: Colors.white),
                           )),
@@ -100,21 +97,22 @@ class _AddEgePointsState extends State<AddEgePoints> {
                       ),
                       TextButton(
                           onPressed: () {
-                            context.read<AddEgePointsBloc>()
-                              ..add(PutSubjects(formGroup: form.value));
+                            context
+                                .read<AddEgePointsBloc>()
+                                .add(PutSubjects(formGroup: form.value));
                           },
-                          child: Text(
+                          child: const Text(
                             'Готово',
                             style: TextStyle(color: Colors.white),
                           )),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       )
                     ],
                   ),
                 ),
               )
-            : Center(child: CircularProgressIndicator());
+            : const Center(child: CircularProgressIndicator());
       }),
     );
   }

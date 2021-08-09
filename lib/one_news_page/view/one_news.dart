@@ -21,106 +21,100 @@ class _OneNewsListState extends State<OneNews> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<OneNewsBloc, OneNewsState>(
-        builder: (BuildContext context, OneNewsState state) {
-      if (state.isLoading)
-        return Center(
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [CircularProgressIndicator()]),
-        );
-      else {
-        if (state.oneNews != null)
-          return BlocBuilder<AccountBloc, AccountState>(
+      builder: (BuildContext context, OneNewsState state) {
+        if (state.isLoading) {
+          return const CircularProgressIndicator();
+        } else {
+          if (state.oneNews != null) {
+            return BlocBuilder<AccountBloc, AccountState>(
               builder: (BuildContext context, AccountState accountState) {
-            return ListView(
-              children: <Widget>[
-                if (state.oneNews!.picture != null)
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Image.network('${state.oneNews!.picture}',
-                            errorBuilder: (context, error, stackTrace) {
-                          return SizedBox();
-                        }, loadingBuilder: (BuildContext context, Widget child,
-                                ImageChunkEvent? loadingProgress) {
-                          if (loadingProgress == null) {
-                            return child;
-                          }
-                          return Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [CircularProgressIndicator()]);
-                        }),
+                return ListView(
+                  children: <Widget>[
+                    if (state.oneNews!.picture != null)
+                      Row(
+                        children: [
+                          Expanded(
+                            child:
+                                Image.network(state.oneNews!.picture.toString(),
+                                    errorBuilder: (context, error, stackTrace) {
+                              return const SizedBox();
+                            }, loadingBuilder: (BuildContext context,
+                                        Widget child,
+                                        ImageChunkEvent? loadingProgress) {
+                              if (loadingProgress == null) {
+                                return child;
+                              }
+                              return const CircularProgressIndicator();
+                            }),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                SizedBox(
-                  height: 10,
-                ),
-                if (accountState.isLoading)
-                  state.oneNews!.isFavorite
-                      ? IconButton(
-                          icon: const Icon(Icons.favorite),
-                          onPressed: () {
-                            context.read<OneNewsBloc>()
-                              ..add(ChangedFavorites());
-                          },
-                        )
-                      : IconButton(
-                          icon: const Icon(Icons.favorite_border),
-                          onPressed: () {
-                            context.read<OneNewsBloc>()
-                              ..add(ChangedFavorites());
-                          },
-                        ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(top: 24, bottom: 16),
-                        child: Text(
-                          DateFormat.yMd('ru_RU').format(state.oneNews!.date),
-                          style:
-                              TextStyle(fontSize: 16, color: Color(0XFF909090)),
-                        ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    if (accountState.isLoading)
+                      state.oneNews!.isFavorite
+                          ? IconButton(
+                              icon: const Icon(Icons.favorite),
+                              onPressed: () {
+                                context
+                                    .read<OneNewsBloc>()
+                                    .add(ChangedFavorites());
+                              },
+                            )
+                          : IconButton(
+                              icon: const Icon(Icons.favorite_border),
+                              onPressed: () {
+                                context
+                                    .read<OneNewsBloc>()
+                                    .add(ChangedFavorites());
+                              },
+                            ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 24, bottom: 16),
+                            child: Text(
+                              DateFormat.yMd('ru_RU')
+                                  .format(state.oneNews!.date),
+                              style: const TextStyle(
+                                  fontSize: 16, color: Color(0xFF909090)),
+                            ),
+                          ),
+                          Text(
+                            state.oneNews!.title,
+                            style: const TextStyle(
+                                fontSize: 32,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          if ((state.oneNews != null) &&
+                              (state.oneNews!.text!.isNotEmpty))
+                            Html(
+                              data: state.oneNews!.text,
+                            )
+                          else
+                            const CircularProgressIndicator(),
+                        ],
                       ),
-
-                      /// так как добавление в избранное - функционал авторизованного пользователя, надо скрывать кнопку, если пользователь не авторизован
-                      /// или можно показать модалку с предложением авторизоваться
-
-                      Text(
-                        state.oneNews!.title,
-                        style: TextStyle(
-                            fontSize: 32,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      if ((state.oneNews != null) &&
-                          (state.oneNews!.text!.isNotEmpty))
-
-                        /// тут можно без интерполяции передавать текст напрямую
-                        Html(
-                          data: """${state.oneNews!.text}""",
-                        )
-                      else
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [CircularProgressIndicator()]),
-                    ],
-                  ),
-                ),
-              ],
+                    ),
+                  ],
+                );
+              },
             );
-          });
-        else
-          return Center(
-            child: Text(
-              'Ошибка при загрузке новости',
-              style: TextStyle(fontSize: 16, color: Colors.black),
-            ),
-          );
-      }
-    });
+          } else {
+            return const Center(
+              child: Text(
+                'Ошибка при загрузке новости',
+                style: TextStyle(fontSize: 16, color: Colors.black),
+              ),
+            );
+          }
+        }
+      },
+    );
   }
 }

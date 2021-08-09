@@ -9,7 +9,9 @@ import 'one_event.dart';
 
 class OneEventPage extends StatefulWidget {
   final int _id;
-  const OneEventPage({Key? key, required int id}) : _id = id;
+  const OneEventPage({Key? key, required int id})
+      : _id = id,
+        super(key: key);
 
   @override
   _OneEventListPageState createState() => _OneEventListPageState();
@@ -39,10 +41,10 @@ class _OneEventListPageState extends State<OneEventPage> {
       value: oneEventBloc,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Мероприятие'),
+          title: const Text('Мероприятие'),
           centerTitle: true,
         ),
-        body: OneEvent(),
+        body: const OneEvent(),
       ),
     );
   }

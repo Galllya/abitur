@@ -20,7 +20,7 @@ class _NewsListPageState extends State<NewsPage> {
     super.initState();
     newsListBloc = NewsBloc(
       newsRepository: context.read<NewsRepository>(),
-    )..add(NewsLoaded(page: 1));
+    )..add(const NewsLoaded(page: 1));
   }
 
   @override
@@ -35,10 +35,10 @@ class _NewsListPageState extends State<NewsPage> {
       value: newsListBloc,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Новости'),
+          title: const Text('Новости'),
           centerTitle: true,
         ),
-        body: News(),
+        body: const News(),
       ),
     );
   }

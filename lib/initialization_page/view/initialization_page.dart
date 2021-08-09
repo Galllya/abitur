@@ -34,7 +34,7 @@ class _InitializationPageState extends State<InitializationPage> {
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: initializationBloc,
-      child: Scaffold(
+      child: const Scaffold(
         body: Initialization(),
       ),
     );

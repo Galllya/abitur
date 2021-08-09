@@ -11,7 +11,8 @@ part 'favorites_state.dart';
 class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
   final IFavoritesRepository favoritesRepository;
 
-  FavoritesBloc({required this.favoritesRepository}) : super(FavoritesState());
+  FavoritesBloc({required this.favoritesRepository})
+      : super(const FavoritesState());
 
   @override
   Stream<FavoritesState> mapEventToState(

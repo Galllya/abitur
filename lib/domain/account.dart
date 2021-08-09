@@ -1,8 +1,6 @@
 import 'package:abitur/domain/subject_in_accoint.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'account.g.dart';
-
 @JsonSerializable(
   createToJson: false,
 )
@@ -38,35 +36,35 @@ class AccountData {
   });
 
   factory AccountData.fromJson(Map<String, dynamic> json) => AccountData(
-        id: json["id"],
-        firstName: json["firstName"],
-        lastName: json["lastName"],
-        surName: json["surName"],
-        email: json["email"],
-        phoneNumber: json["phoneNumber"],
-        birthday: DateTime.parse(json["birthday"]),
-        country: json["country"],
-        region: json["region"],
-        city: json["city"],
-        points: json["points"],
-        egePoints: json["egePoints"],
+        id: json['id'],
+        firstName: json['firstName'],
+        lastName: json['lastName'],
+        surName: json['surName'],
+        email: json['email'],
+        phoneNumber: json['phoneNumber'],
+        birthday: DateTime.parse(json['birthday']),
+        country: json['country'],
+        region: json['region'],
+        city: json['city'],
+        points: json['points'],
+        egePoints: json['egePoints'],
         subjectInAccount: List<SubjectInAccount>.from(
-            json["subjects"].map((x) => SubjectInAccount.fromJson(x))),
+            json['subjects'].map((x) => SubjectInAccount.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "firstName": firstName,
-        "lastName": lastName,
-        "surName": surName,
-        "email": email,
-        "phoneNumber": phoneNumber,
-        "birthday": birthday.toIso8601String(),
-        "country": country,
-        "region": region,
-        "city": city,
-        "points": points,
-        "egePoints": egePoints,
-        "subjects": List<dynamic>.from(subjectInAccount.map((x) => x.toJson())),
+        'id': id,
+        'firstName': firstName,
+        'lastName': lastName,
+        'surName': surName,
+        'email': email,
+        'phoneNumber': phoneNumber,
+        'birthday': birthday.toIso8601String(),
+        'country': country,
+        'region': region,
+        'city': city,
+        'points': points,
+        'egePoints': egePoints,
+        'subjects': List<dynamic>.from(subjectInAccount.map((x) => x.toJson())),
       };
 }

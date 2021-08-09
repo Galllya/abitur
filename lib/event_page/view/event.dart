@@ -31,26 +31,28 @@ class _EventListState extends State<Event> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<EventBloc, EventState>(
-        builder: (BuildContext context, EventState state) {
-      if (state.loading && state.news.isEmpty)
-        return Center(child: CircularProgressIndicator());
-      if (state.news.isEmpty) {
-        return Center(child: Text('Нет новостей'));
-      } else {
-        return Padding(
-          padding: EdgeInsets.all(16),
-          child: ListView(
-            controller: scrollController,
-            children: [
-              ...state.news.map((eventArticle) => Padding(
-                  padding: EdgeInsets.only(bottom: 16),
-                  child: EventSectionCard(
-                    eventViewModel: eventArticle,
-                  ))),
-            ],
-          ),
-        );
-      }
-    });
+      builder: (BuildContext context, EventState state) {
+        if (state.loading && state.news.isEmpty) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        if (state.news.isEmpty) {
+          return const Center(child: Text('Нет новостей'));
+        } else {
+          return Padding(
+            padding: const EdgeInsets.all(16),
+            child: ListView(
+              controller: scrollController,
+              children: [
+                ...state.news.map((eventArticle) => Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: EventSectionCard(
+                      eventViewModel: eventArticle,
+                    ))),
+              ],
+            ),
+          );
+        }
+      },
+    );
   }
 }

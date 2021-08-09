@@ -22,7 +22,7 @@ class EnterSubjectPoints extends StatelessWidget {
       formGroup: formGroup,
       child: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Row(
@@ -40,27 +40,27 @@ class EnterSubjectPoints extends StatelessWidget {
                           ))
                     ],
                   )),
-              SizedBox(
+              const SizedBox(
                 width: 20,
               ),
               Flexible(
                 flex: 1,
                 child: ReactiveTextField(
                     formControlName: 'value',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 20,
                       color: Colors.grey,
                     ),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
-                      hintText: "Баллы",
+                      hintText: 'Баллы',
                     )),
               ),
               IconButton(
                   onPressed: () {
                     delete();
                   },
-                  icon: Icon(Icons.delete))
+                  icon: const Icon(Icons.delete))
             ],
           ),
         ],

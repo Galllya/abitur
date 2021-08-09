@@ -14,12 +14,8 @@ class Authorization extends StatefulWidget {
 }
 
 class _AuthorizationtListState extends State<Authorization> {
-  final String loginText = 'admin@mail.ru';
-  final String passwordText = 'P_assword1';
-
   final loginController = TextEditingController();
   final passwordController = TextEditingController();
-
   final form = FormGroup({
     'email': FormControl<String>(
       value: 'admin@mail.ru',
@@ -34,12 +30,9 @@ class _AuthorizationtListState extends State<Authorization> {
       Validators.minLength(0),
     ]),
   });
+
   @override
   void initState() {
-    // var account = context.read<AccountRepository>();
-    // print(account.loadAccount());
-    loginController.text = loginText;
-    passwordController.text = passwordText;
     super.initState();
   }
 
@@ -47,166 +40,172 @@ class _AuthorizationtListState extends State<Authorization> {
   Widget build(BuildContext context) {
     return BlocListener<AuthorizationBloc, AuthorizationState>(
       listener: (BuildContext context, AuthorizationState state) {
-        if (state.textError.isNotEmpty)
+        if (state.textError.isNotEmpty) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.textError.join('\n')),
             ),
           );
-        if (state.successfulAuthorization)
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => StartPage()));
+        }
+        if (state.successfulAuthorization) {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const StartPage()));
+        }
         context.read<AccountBloc>().add(LoadingProfileData());
       },
       child: BlocBuilder<AuthorizationBloc, AuthorizationState>(
-          builder: (BuildContext context, AuthorizationState state) {
-        return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Spacer(
-                flex: 2,
-              ),
-              Column(
-                children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Авторизация',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 42,
-                  ),
-                  ReactiveForm(
-                    formGroup: this.form,
-                    child: Column(
-                      children: <Widget>[
-                        ReactiveTextField(
-                          formControlName: 'email',
-                          decoration: InputDecoration(
-                            labelText: 'Логин',
-                          ),
-                          validationMessages: (control) => {
-                            'required': 'Не оставляйте поле пустым!',
-                            'email': 'Некорректный формат email'
-                          },
-                        ),
-                        ReactiveTextField(
-                          formControlName: 'password',
-                          obscureText: true,
-                          obscuringCharacter: '*',
-                          decoration: InputDecoration(
-                            labelText: 'Код подтверждения',
-                          ),
-                          validationMessages: (control) => {
-                            'required': 'Не оставляйте поле пустым!',
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 24,
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    style: Theme.of(context).textButtonTheme.style!.copyWith(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.transparent),
-                        ),
-                    child: Text(
-                      'Забыли пароль?',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0XFF909090),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Spacer(
-                flex: 3,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 22),
-                child: Column(
+        builder: (BuildContext context, AuthorizationState state) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Spacer(
+                  flex: 2,
+                ),
+                Column(
                   children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: ReactiveForm(
-                            formGroup: this.form,
-                            child: ReactiveFormConsumer(
-                                builder: (context, form, child) {
-                              return TextButton(
-                                onPressed: form.valid == true
-                                    ? state.formIsSent
-                                        ? null
-                                        : () {
-                                            context
-                                                .read<AuthorizationBloc>()
-                                                .add(LoginStarted(
-                                                    logAndPas: form.value));
-                                          }
-                                    : null,
-                                child: AnimatedSwitcher(
-                                  duration: Duration(milliseconds: 300),
-                                  child: state.formIsSent
-                                      ? CircularProgressIndicator(
-                                          color: Colors.white,
-                                        )
-                                      : Text(
-                                          'Войти',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16),
-                                        ),
-                                ),
-                              );
-                            }),
-                          ),
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Авторизация',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
                         ),
-                      ],
+                      ),
                     ),
-                    SizedBox(
-                      height: 20,
+                    const SizedBox(
+                      height: 42,
+                    ),
+                    ReactiveForm(
+                      formGroup: form,
+                      child: Column(
+                        children: <Widget>[
+                          ReactiveTextField(
+                            formControlName: 'email',
+                            decoration: const InputDecoration(
+                              labelText: 'Логин',
+                            ),
+                            validationMessages: (control) => {
+                              'required': 'Не оставляйте поле пустым!',
+                              'email': 'Некорректный формат email'
+                            },
+                          ),
+                          ReactiveTextField(
+                            formControlName: 'password',
+                            obscureText: true,
+                            obscuringCharacter: '*',
+                            decoration: const InputDecoration(
+                              labelText: 'Код подтверждения',
+                            ),
+                            validationMessages: (control) => {
+                              'required': 'Не оставляйте поле пустым!',
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 24,
                     ),
                     TextButton(
+                      onPressed: () {},
                       style: Theme.of(context).textButtonTheme.style!.copyWith(
                             backgroundColor:
                                 MaterialStateProperty.all(Colors.transparent),
                           ),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => StartPage()));
-                      },
-                      child: Text(
-                        'Войти без регистрации',
+                      child: const Text(
+                        'Забыли пароль?',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Color(0XFF909090),
+                          color: Color(0xFF909090),
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 32,
-                    )
                   ],
                 ),
-              )
-            ],
-          ),
-        );
-      }),
+                const Spacer(
+                  flex: 3,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 22),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: ReactiveForm(
+                              formGroup: form,
+                              child: ReactiveFormConsumer(
+                                  builder: (context, form, child) {
+                                return TextButton(
+                                  onPressed: form.valid == true
+                                      ? state.formIsSent
+                                          ? null
+                                          : () {
+                                              context
+                                                  .read<AuthorizationBloc>()
+                                                  .add(LoginStarted(
+                                                      logAndPas: form.value));
+                                            }
+                                      : null,
+                                  child: AnimatedSwitcher(
+                                    duration: const Duration(milliseconds: 300),
+                                    child: state.formIsSent
+                                        ? const CircularProgressIndicator(
+                                            color: Colors.white,
+                                          )
+                                        : const Text(
+                                            'Войти',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 16),
+                                          ),
+                                  ),
+                                );
+                              }),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextButton(
+                        style: Theme.of(context)
+                            .textButtonTheme
+                            .style!
+                            .copyWith(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.transparent),
+                            ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const StartPage()));
+                        },
+                        child: const Text(
+                          'Войти без регистрации',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Color(0xFF909090),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 32,
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

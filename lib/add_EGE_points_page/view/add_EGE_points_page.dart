@@ -37,10 +37,10 @@ class _AddEgepointsPageState extends State<AddEgepointsPage> {
       value: addEgePointsBloc,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Добавление баллов ЕГЭ'),
+          title: const Text('Добавление баллов ЕГЭ'),
           centerTitle: true,
         ),
-        body: AddEgePoints(),
+        body: const AddEgePoints(),
       ),
     );
   }

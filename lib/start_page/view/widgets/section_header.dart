@@ -21,17 +21,13 @@ class SectionHeader extends StatelessWidget {
           Expanded(
             child: Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.black,
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
-
-          /// Тут я не заметил раньше, но лучше выносить обработчик onTap в аргументы виджета,
-          /// чтобы не было таких условий(например, если мы добавим еще третий раздел и так далее) и было что-то вроде
-          /// как я указал в комментариях тут и выше
           InkWell(
             onTap: () {
               onButtonTap();

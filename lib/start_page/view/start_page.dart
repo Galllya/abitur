@@ -39,11 +39,11 @@ class _StartListPageState extends State<StartPage> {
       value: startBloc,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Главная'),
+          title: const Text('Главная'),
           centerTitle: true,
         ),
-        drawer: Draver(),
-        body: Start(),
+        drawer: const Draver(),
+        body: const Start(),
       ),
     );
   }

@@ -64,18 +64,20 @@ void main() async {
         Provider<SharedPreferences>.value(value: sharedPreferences),
         Provider<FavoritesRepository>.value(value: favoritesRepo),
         Provider<SubjectsRepository>.value(value: subjectsRepo),
-      ], child: MyApp()),
+      ], child: const MyApp()),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: primaryTheme,
-      home: InitializationPage(),
+      home: const InitializationPage(),
     );
   }
 }

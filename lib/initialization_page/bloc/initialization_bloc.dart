@@ -11,7 +11,7 @@ class InitializationBloc
     extends Bloc<InitializationEvent, InitializationState> {
   final SharedPreferences sharedPreferences;
   InitializationBloc({required this.sharedPreferences})
-      : super(InitializationState());
+      : super(const InitializationState());
 
   @override
   Stream<InitializationState> mapEventToState(
@@ -23,8 +23,6 @@ class InitializationBloc
   }
 
   Stream<InitializationState> _mapInitializationStateLiadingEvent() async* {
-    /// тут можно не использовать await, так как плагин берет значение из закешированной Map,
-    /// которая отражает текущее состояние локального хранилища
     String? isToken = sharedPreferences.getString('token');
     if (isToken != null) {
       yield state.copyWith(

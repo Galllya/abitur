@@ -12,7 +12,7 @@ abstract class IAccountRepository {
 
   Future<AccountData> loadAccount();
   Future<TokenData> authorize(Map<String, dynamic> form);
-  Future<AccountData> putSubjects(Map<String, dynamic> form);
+  Future<AccountData> putSubjects(subjectInAccount);
 }
 
 class AccountRepository extends IAccountRepository {
@@ -37,7 +37,7 @@ class AccountRepository extends IAccountRepository {
   }
 
   @override
-  Future<AccountData> putSubjects(SubjectInAccount) async {
-    return putSubjects(SubjectInAccount);
+  Future<AccountData> putSubjects(subjectInAccount) async {
+    return putSubjects(subjectInAccount);
   }
 }

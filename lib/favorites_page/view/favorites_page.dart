@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FavoritesPage extends StatefulWidget {
-  const FavoritesPage({Key? key});
+  const FavoritesPage({Key? key}) : super(key: key);
 
   @override
   _FavoritesPageState createState() => _FavoritesPageState();
@@ -26,10 +26,10 @@ class _FavoritesPageState extends State<FavoritesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Избранное'),
+        title: const Text('Избранное'),
         centerTitle: true,
       ),
-      body: Favorites(),
+      body: const Favorites(),
     );
   }
 }

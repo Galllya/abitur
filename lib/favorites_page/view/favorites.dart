@@ -24,23 +24,24 @@ class _FavoritesState extends State<Favorites> {
   Widget build(BuildContext context) {
     return BlocBuilder<FavoritesBloc, FavoritesState>(
         builder: (BuildContext context, FavoritesState state) {
-      if (state.loading && state.favorites.isEmpty)
-        return Center(child: CircularProgressIndicator());
+      if (state.loading && state.favorites.isEmpty) {
+        return const Center(child: CircularProgressIndicator());
+      }
       if (state.favorites.isEmpty) {
-        return Center(child: Text('Нет новостей'));
+        return const Center(child: Text('Нет новостей'));
       } else {
         return Padding(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: ListView(
             controller: scrollController,
             children: [
               ...state.favorites.map(
                 (favoritesDate) => Padding(
-                  padding: EdgeInsets.only(bottom: 16),
+                  padding: const EdgeInsets.only(bottom: 16),
                   child: FavoritesCard(
                     favoritesDate: favoritesDate,
                     onButtonTap: () {
-                      favoritesDate.type == "News"
+                      favoritesDate.type == 'News'
                           ? Navigator.push(
                               context,
                               MaterialPageRoute(

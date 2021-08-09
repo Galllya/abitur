@@ -14,7 +14,7 @@ class OneEventBloc extends Bloc<OneEventEvent, OneEventState> {
   final FavoritesBloc favoritesBloc;
 
   OneEventBloc({required this.favoritesBloc, required this.eventRepository})
-      : super(OneEventState());
+      : super(const OneEventState());
 
   @override
   Stream<OneEventState> mapEventToState(
@@ -22,7 +22,8 @@ class OneEventBloc extends Bloc<OneEventEvent, OneEventState> {
   ) async* {
     if (event is OneEventLoaded) {
       yield* _mapOneEventSLoadedToState(event.id);
-    } else if (event is ChangedFavorites) yield* _mapChangedFavoritesToState();
+    }
+    if (event is ChangedFavorites) yield* _mapChangedFavoritesToState();
   }
 
   Stream<OneEventState> _mapOneEventSLoadedToState(int id) async* {

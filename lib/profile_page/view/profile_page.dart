@@ -36,7 +36,7 @@ class _ProfiePageState extends State<ProfilePage> {
       value: profileBloc,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Профиль'),
+          title: const Text('Профиль'),
           centerTitle: true,
           actions: <Widget>[
             IconButton(
@@ -44,14 +44,14 @@ class _ProfiePageState extends State<ProfilePage> {
               onPressed: () {
                 print(context.read<AccountBloc>().state.accountData);
                 Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => StartPage()));
+                    MaterialPageRoute(builder: (context) => const StartPage()));
                 context.read<AccountBloc>().add(LogOutOfProfile());
                 print(context.read<AccountBloc>().state.accountData);
               },
             ),
           ],
         ),
-        body: Profile(),
+        body: const Profile(),
       ),
     );
   }
