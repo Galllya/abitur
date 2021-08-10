@@ -36,13 +36,11 @@ class AddEgePointsBloc extends Bloc<AddEgePointsEvent, AddEgePointsState> {
   Stream<AddEgePointsState> attemptGetSubjects() async* {
     try {
       final subjects = await subjectsRepository.loadSubjects();
-
       yield state.copyWith(
         subjects: subjects,
       );
     } catch (e) {
       yield state.copyWith(loading: false);
-
       rethrow;
     }
   }
