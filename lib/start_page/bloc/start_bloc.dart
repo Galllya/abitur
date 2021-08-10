@@ -15,7 +15,7 @@ class StartBloc extends Bloc<StartEvent, StartState> {
   final IEventRepository eventRepository;
 
   StartBloc({required this.eventRepository, required this.newsRepository})
-      : super(StartState());
+      : super(const StartState());
 
   @override
   Stream<StartState> mapEventToState(

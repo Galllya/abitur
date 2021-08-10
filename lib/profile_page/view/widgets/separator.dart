@@ -1,11 +1,11 @@
-import 'package:abitur/style/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Separator extends StatelessWidget {
-  final String littleText;
-  final String bigText;
-  const Separator({Key? key, required this.littleText, required this.bigText})
+  final String label;
+
+  final String value;
+  const Separator({Key? key, required this.label, required this.value})
       : super(key: key);
 
   @override
@@ -14,17 +14,17 @@ class Separator extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          littleText,
-          style: TextStyle(
+          label,
+          style: const TextStyle(
             fontSize: 14,
-            color: Color(0XFF909090),
+            color: Color(0xFF909090),
           ),
         ),
         Text(
-          bigText,
-          style: TextStyle(fontSize: 20),
+          value,
+          style: const TextStyle(fontSize: 20),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         )
       ],

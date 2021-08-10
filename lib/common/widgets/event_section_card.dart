@@ -17,10 +17,9 @@ class EventSectionCard extends StatelessWidget {
     String? eventTime;
     if (_eventViewModel.dateFrom != null) {
       if (_eventViewModel.dateFrom!.difference(now).inDays < 0) {
-        //eventTime = 'no';
       } else {
         eventTime =
-            "Через ${_eventViewModel.dateFrom!.difference(now).inDays ~/ 30} месяцев";
+            'Через ${_eventViewModel.dateFrom!.difference(now).inDays ~/ 30} месяцев';
       }
     }
 
@@ -31,7 +30,7 @@ class EventSectionCard extends StatelessWidget {
           BoxShadow(
             color: Colors.black.withOpacity(0.14),
             blurRadius: 5,
-            offset: Offset(0, 2),
+            offset: const Offset(0, 2),
           ),
         ],
         borderRadius: BorderRadius.circular(4),
@@ -47,12 +46,12 @@ class EventSectionCard extends StatelessWidget {
                         OneEventPage(id: _eventViewModel.id.toInt())));
           },
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
             child: Column(
               children: [
                 if (eventTime != null)
                   Padding(
-                    padding: EdgeInsets.only(bottom: 16),
+                    padding: const EdgeInsets.only(bottom: 16),
                     child: Row(
                       children: [
                         Text(
@@ -72,7 +71,7 @@ class EventSectionCard extends StatelessWidget {
                       child: Column(children: [
                         Text(
                           _eventViewModel.title,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.normal,
                               height: 22 / 16),
@@ -81,12 +80,12 @@ class EventSectionCard extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 if (_eventViewModel.dateFrom != null)
                   Row(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(right: 10),
+                        padding: const EdgeInsets.only(right: 10),
                         child: SvgPicture.asset(
                             'assets/icons/icon_calendar.svg',
                             height: 10,
@@ -98,11 +97,11 @@ class EventSectionCard extends StatelessWidget {
                             ' - ' +
                             DateFormat.yMd('ru_RU')
                                 .format(_eventViewModel.dateTo!),
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.normal,
                             height: 18 / 14,
-                            color: Color(0XFF909090)),
+                            color: Color(0xFF909090)),
                       )
                     ],
                   )

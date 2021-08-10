@@ -32,7 +32,7 @@ class _AuthorizationListPageState extends State<AuthorizationPage> {
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: authorizationBloc,
-      child: SafeArea(
+      child: const SafeArea(
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           body: Authorization(),

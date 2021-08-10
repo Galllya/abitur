@@ -1,12 +1,15 @@
-import 'package:abitur/authorization_page/view/authorization_page.dart';
+import 'package:abitur/common/bloc/favorite_bloc/favorites_bloc.dart';
 import 'package:abitur/common/network/application_rest_client.dart';
 import 'package:abitur/common/network/interceptors/token_interceptor.dart';
 import 'package:abitur/data/account_provider.dart';
 import 'package:abitur/data/account_repository.dart';
 import 'package:abitur/data/event_repository.dart';
+import 'package:abitur/data/favotites_provider.dart';
+import 'package:abitur/data/favotites_repository.dart';
 import 'package:abitur/data/news_provider.dart';
 import 'package:abitur/data/news_repository.dart';
-import 'package:abitur/initialization_page/view/initialization.dart';
+import 'package:abitur/data/subjects_provider.dart';
+import 'package:abitur/data/subjects_repository.dart';
 import 'package:abitur/initialization_page/view/initialization_page.dart';
 import 'package:abitur/style/theme.dart';
 import 'package:dio/dio.dart';
@@ -32,33 +35,49 @@ void main() async {
   dio.interceptors.add(TokenInterceptor(sharedPreferences, dio));
 
   final applicationRestClient = ApplicationRestClient(dio);
-
+  final subjectsProvider = SubjectsProvider(applicationRestClient);
+  final favoritesProvider = FavoritesProvider(applicationRestClient);
   final accountProvider = AccountProvider(applicationRestClient);
   final newsProvider = NewsProvider(applicationRestClient);
   final eventProvider = EventProvider(applicationRestClient);
+  final subjectsRepo = SubjectsRepository(subjectsProvider);
+  final favoritesRepo = FavoritesRepository(favoritesProvider);
   final accountRepo = AccountRepository(accountProvider, sharedPreferences);
   final newsRepo = NewsRepository(newsProvider);
   final eventRepo = EventRepository(eventProvider);
   runApp(
-    BlocProvider(
-      create: (context) => AccountBloc(sharedPreferences, accountRepo),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<FavoritesBloc>(
+          create: (BuildContext context) =>
+              FavoritesBloc(favoritesRepository: favoritesRepo),
+        ),
+        BlocProvider<AccountBloc>(
+          create: (BuildContext context) =>
+              AccountBloc(sharedPreferences, accountRepo),
+        ),
+      ],
       child: MultiProvider(providers: [
         Provider<EventRepository>.value(value: eventRepo),
         Provider<NewsRepository>.value(value: newsRepo),
         Provider<AccountRepository>.value(value: accountRepo),
         Provider<SharedPreferences>.value(value: sharedPreferences),
-      ], child: MyApp()),
+        Provider<FavoritesRepository>.value(value: favoritesRepo),
+        Provider<SubjectsRepository>.value(value: subjectsRepo),
+      ], child: const MyApp()),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: primaryTheme,
-      home: InitializationPage(),
+      home: const InitializationPage(),
     );
   }
 }

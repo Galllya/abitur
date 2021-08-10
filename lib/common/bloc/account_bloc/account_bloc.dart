@@ -13,7 +13,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   final SharedPreferences sharedPreferences;
   final IAccountRepository accountRepository;
   AccountBloc(this.sharedPreferences, this.accountRepository)
-      : super(AccountState());
+      : super(const AccountState());
 
   @override
   Stream<AccountState> mapEventToState(
@@ -21,7 +21,8 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   ) async* {
     if (event is LoadingProfileData) {
       yield* _mapAccountStateLoadingProfileDate();
-    } else if (event is LogOutOfProfile) {
+    }
+    if (event is LogOutOfProfile) {
       yield* _mapAccountStateLogOutOfProfile();
     }
   }
@@ -33,11 +34,13 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
         accountData: account,
         isLoading: true,
       );
-    } catch (e) {}
+    } catch (e) {
+      rethrow;
+    }
   }
 
   Stream<AccountState> _mapAccountStateLogOutOfProfile() async* {
     sharedPreferences.clear();
-    yield AccountState();
+    yield const AccountState();
   }
 }

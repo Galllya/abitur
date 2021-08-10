@@ -13,7 +13,7 @@ class EventBloc extends Bloc<EventEvent, EventState> {
 
   EventBloc({
     required this.eventRepository,
-  }) : super(EventState());
+  }) : super(const EventState());
 
   @override
   Stream<EventState> mapEventToState(
@@ -21,7 +21,8 @@ class EventBloc extends Bloc<EventEvent, EventState> {
   ) async* {
     if (event is EventState) {
       yield* _mapNewsListStartedToState();
-    } else if (event is EventLoaded) {
+    }
+    if (event is EventLoaded) {
       if (state.loading == false) yield* _mapNewsListLoadedToState(event);
     }
   }

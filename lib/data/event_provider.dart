@@ -15,4 +15,12 @@ class EventProvider extends RestClientProvider {
   Future<EventArticle> loadOneEvents({required int id}) async {
     return applicationRestClient.loadEvent(id: id);
   }
+
+  Future<void> addEventToFavourites({required int id}) async {
+    return applicationRestClient.addEventToFavourites(id: id);
+  }
+
+  Future<void> deleteEventToFavourites({required int id}) async {
+    return applicationRestClient.deleteEventToFavourites(id: id);
+  }
 }

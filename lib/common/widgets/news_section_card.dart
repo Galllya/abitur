@@ -20,7 +20,7 @@ class NewsSectionCard extends StatelessWidget {
           BoxShadow(
             color: Colors.black.withOpacity(0.14),
             blurRadius: 5,
-            offset: Offset(0, 2),
+            offset: const Offset(0, 2),
           ),
         ],
         borderRadius: BorderRadius.circular(4),
@@ -36,7 +36,7 @@ class NewsSectionCard extends StatelessWidget {
                         OneNewsPage(id: _newsViewModel.id.toInt())));
           },
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
             child: Column(
               children: [
                 Row(
@@ -44,7 +44,7 @@ class NewsSectionCard extends StatelessWidget {
                     Expanded(
                       child: Text(
                         _newsViewModel.title,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.normal,
                             height: 22 / 16),
@@ -52,21 +52,21 @@ class NewsSectionCard extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 Row(
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(right: 10),
+                      padding: const EdgeInsets.only(right: 10),
                       child: SvgPicture.asset('assets/icons/icon_calendar.svg',
                           height: 10, width: 10),
                     ),
                     Text(
                       DateFormat.yMd('ru_RU').format(_newsViewModel.date),
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.normal,
                           height: 18 / 14,
-                          color: Color(0XFF909090)),
+                          color: Color(0xFF909090)),
                     )
                   ],
                 )

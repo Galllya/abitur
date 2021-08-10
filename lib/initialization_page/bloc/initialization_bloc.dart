@@ -11,7 +11,7 @@ class InitializationBloc
     extends Bloc<InitializationEvent, InitializationState> {
   final SharedPreferences sharedPreferences;
   InitializationBloc({required this.sharedPreferences})
-      : super(InitializationState());
+      : super(const InitializationState());
 
   @override
   Stream<InitializationState> mapEventToState(
@@ -23,7 +23,7 @@ class InitializationBloc
   }
 
   Stream<InitializationState> _mapInitializationStateLiadingEvent() async* {
-    String? isToken = await sharedPreferences.getString('token');
+    String? isToken = sharedPreferences.getString('token');
     if (isToken != null) {
       yield state.copyWith(
         isLogged: true,

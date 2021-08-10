@@ -1,7 +1,7 @@
 part of 'one_news_bloc.dart';
 
 @immutable
- class OneNewsState {
+class OneNewsState {
   final bool isLoading;
   final NewsArticle? oneNews;
 
@@ -9,13 +9,11 @@ part of 'one_news_bloc.dart';
 
   OneNewsState copyWith({
     bool? isLoading,
-    NewsArticle? oneEvent,
+    NewsArticle? oneNews,
   }) {
     return OneNewsState(
       isLoading: isLoading ?? this.isLoading,
-      oneNews: oneEvent ?? this.oneNews,
+      oneNews: oneNews ?? this.oneNews,
     );
   }
 }
-
-
